@@ -34,3 +34,4 @@ bower_components/
 # Environment variable
 .env
 
+bundle.js
