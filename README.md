@@ -1,22 +1,14 @@
-# Food Matrix
+# Cartblanched
 
-> A web app that allows you to search ingredients to find matching recipes and text the ingredients to yourself or a friend.
+> An web application that allows you to shop your favorite recipes, get grocery deliveries, and text ingredient lists to others.
 
-## Contributors
+## Developer Team
 
-  - [Greg Kolb - Software Engineer](https://github.com/gkolb)
-  - [John Blaine - Software Engineer](https://github.com/john-blaine)
-  - [Paula Obler - Software Engineer](https://github.com/paula-o)
+  - [Evaline Bai](https://github.com/evalineBai)
+  - [Norbie Magno](https://github.com/Magnoes)
+  - [Mike Butak](https://github.com/mikebutak)
 
-## Technologies
-
-  - [Nodejs](https://nodejs.org/en/)
-  - [React](https://reactjs.org/)
-  - [MongoDB](https://www.mongodb.com/)
-  - [Twilio API](https://www.twilio.com/docs/api/rest)
-  - [Spoonacular API](https://spoonacular.com/food-api)
-  - [Axios](https://www.npmjs.com/package/axios)
-  - [Semantic UI](https://semantic-ui.com/)
+## Table of Contents
 
 ## Getting Started
 
