@@ -43,6 +43,7 @@ class App extends React.Component {
     this.onUserSearch = this.onUserSearch.bind(this);
     this.onRecipeSearch = this.onRecipeSearch.bind(this);
     this.onRecipeSearchClick = this.onRecipeSearchClick.bind(this);
+    this.onIngredientCheck = this.onIngredientCheck.bind(this);
   }
 
   signupSubmit(signup) {
@@ -62,12 +63,12 @@ class App extends React.Component {
           this.setState({
             loggedIn: true
           });
-        };
+        }
       },
       error: (err) => {
         console.log(err);
       }
-    })
+    });
   }
 
   loginSubmit(login) {
@@ -85,25 +86,27 @@ class App extends React.Component {
           this.setState({
             loggedIn: true
           });
-        };
+        }
       },
       error: (err) => {
         console.log(err);
       }
-    })
+    });
   }
 
   logoutSubmit() {
     $.get('/logout');
   }
 
-  //When recipe in either favorites or all recipes list is clicked, make API request for more detailed data object for target recipe and load into focal recipe component
   onRecipeClick (recipe) {
     var component = this;
     $.ajax({
       type: 'GET',
       url: '/recipe/' + recipe.id,
       success: (recipe) => {
+        recipe.extendedIngredients.forEach((ingredient) => {
+          ingredient.checked = false;
+        });
         component.setState({
           focalRecipe: recipe
         });
@@ -114,13 +117,21 @@ class App extends React.Component {
     });
   }
 
+  onIngredientCheck (id) {
+    this.state.focalRecipe.extendedIngredients.forEach((ingredient) => {
+      if (ingredient.id === id) {
+        ingredient.checked = !ingredient.checked;
+      }
+    });
+  }
+
   //search for username in database and pull all favorited recipes for that user
   onUserSearchClick(e) {
     e.preventDefault();
     this.setState({
       currentUser: this.state.userSearch + "'s",
       favoriteError: false
-    })
+    });
     let component = this;
     $.ajax({
       type: 'GET',
@@ -164,7 +175,7 @@ class App extends React.Component {
     $.ajax({
       type: 'GET',
       url: '/recipes?ingredients=' + searchIngredients,
-      success:function(recipesData) {
+      success: function(recipesData) {
         component.setState({
           recipeList: recipesData
         });
@@ -233,13 +244,12 @@ class App extends React.Component {
           exact path="/login"
           render={ () =>
             <div className="ui container">
-              <Login loginSubmit={this.loginSubmit}/>
+              <Login loginSubmit={this.loginSubmit} />
             </div>
           }
         />
 
         <div className="ui container">
-
           {/*<h1 class="ui aligned center header segment">
             <img src="..dist/egg-icon.png"/>
             Cartblanched
@@ -256,9 +266,9 @@ class App extends React.Component {
             exact path="/favorites"
             render={ () =>
               <FavoritesList
-                favoriteList = {this.state.favoriteList}
-                onRecipeClick = {this.onRecipeClick}
-                currentUser = {this.state.currentUser}
+                favoriteList={this.state.favoriteList}
+                onRecipeClick={this.onRecipeClick}
+                currentUser={this.state.currentUser}
               />
             }
           />
@@ -272,36 +282,34 @@ class App extends React.Component {
                     <div className="ui segment">
                       <div >
                         <FocalRecipe
-                        focalRecipe = {this.state.focalRecipe}
-                        recipeList = {this.state.recipeList}
-                        addFavorite = {this.addFavorite}
-                        favoriteError = {this.state.favoriteError}
-                        favoriteSuccess = {this.state.favoriteSuccess}
+                          focalRecipe={this.state.focalRecipe}
+                          recipeList={this.state.recipeList}
+                          addFavorite={this.addFavorite}
+                          favoriteError={this.state.favoriteError}
+                          favoriteSuccess={this.state.favoriteSuccess}
+                          handleCheck={this.onIngredientCheck}
                         />
                       </div>
                     </div>
                   </div>
-
                   <div className="six wide column">
                     <div>
                       <SearchRecipe
-                      onRecipeSearch = {this.onRecipeSearch}
-                      onRecipeSearchClick = {this.onRecipeSearchClick}
-                      recipeSearch = {this.state.recipeSearch}
+                        onRecipeSearch={this.onRecipeSearch}
+                        onRecipeSearchClick={this.onRecipeSearchClick}
+                        recipeSearch={this.state.recipeSearch}
                       />
-
                       <SearchUser
-                      onUserSearchClick = {this.onUserSearchClick}
-                      userSearch = {this.state.userSearch}
-                      onUserSearch = {this.onUserSearch}
+                        onUserSearchClick = {this.onUserSearchClick}
+                        userSearch = {this.state.userSearch}
+                        onUserSearch = {this.onUserSearch}
                       />
                     </div>
                   </div>
                 </div>
-
                 <AllRecipesList
-                onRecipeClick = {this.onRecipeClick}
-                recipeList= {this.state.recipeList}
+                  onRecipeClick={this.onRecipeClick}
+                  recipeList={this.state.recipeList}
                 />
               </div>
             }
