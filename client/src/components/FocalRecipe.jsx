@@ -9,8 +9,13 @@ const inputStyle = {
   width: 50
 }
 
-const style = {
+const textButton = {
   backgroundColor: "#88C057"
+}
+
+const favoriteButton = {
+  backgroundColor: "#F36B6B",
+  color: "#FBEAE2"
 }
 
 class FocalRecipe extends React.Component {
@@ -88,23 +93,23 @@ class FocalRecipe extends React.Component {
     return (
       <div>
 
-      <div class="ui two column stackable grid">
-        <div class="10 wide column">
+      <div className="ui two column stackable grid">
+        <div className="10 wide column">
           <h3>{this.props.focalRecipe.title}</h3>
           <div>
             <a href={this.props.focalRecipe.sourceUrl} target="_blank">
               <img
-                class="ui centered rounded image" src={this.props.focalRecipe.image}
+                className="ui centered rounded image" src={this.props.focalRecipe.image}
               />
             </a>
           </div>
         </div>
-        <div class="6 wide column">
-          <div class="content">
-            <div class="ui centered header small">Ingredients</div>
+        <div className="6 wide column">
+          <div className="content">
+            <div className="ui centered header small">Ingredients</div>
           </div>
 
-          <div class="extra content">
+          <div className="extra content">
             <span>
               {this.props.focalRecipe.extendedIngredients.map((ingredient) =>
               <ul> <input type="checkbox"/> {ingredient.originalString} </ul>
@@ -115,21 +120,21 @@ class FocalRecipe extends React.Component {
 
       </div>
 
-        <form class="ui form">
-          <div class="ui header small">Text Ingredients</div>
-          <div class="inline fields">
-              <div class="five wide field">
-                <div class="ui mini input">
+        <form className="ui form">
+          <div className="ui header small">Text Ingredients</div>
+          <div className="inline fields">
+              <div className="five wide field">
+                <div className="ui mini input">
                   <input style={inputStyle} value={this.state.areaCode} onChange={this.onAreaCodeEntry} type="text" placeholder="(xxx)" />
                 </div>
               </div>
-              <div class="five wide field">
-                <div class="ui mini input">
+              <div className="five wide field">
+                <div className="ui mini input">
                   <input style={inputStyle} value={this.state.prefix} onChange={this.onPrefixEntry} type="text" placeholder="xxx" />
                 </div>
               </div>
-              <div class="six wide field">
-                <div class="ui mini input">
+              <div className="six wide field">
+                <div className="ui mini input">
                   <input style={inputStyle} value={this.state.lineNum} onChange={this.onLineNumEntry} type="text" placeholder="xxxx" />
                 </div>
               </div>
@@ -159,17 +164,18 @@ class FocalRecipe extends React.Component {
               message = {"Added to Favorites!"}
             /> : null
         }
-        <div class="two ui buttons">
+        <div className="two ui buttons">
           <button
-              style = {style}
-              class="ui button"
+              style = {textButton}
+              className="ui button"
               onClick={this.sendNumber}>
               Send Text
           </button>
           <button
-              class="ui red button"
+              style = {favoriteButton}
+              className="ui button"
               onClick={this.props.addFavorite}>
-              <i class="heart icon"></i>
+              <i className="heart icon"></i>
               Favorite
           </button>
         </div>

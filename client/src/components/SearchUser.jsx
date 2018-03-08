@@ -6,13 +6,13 @@ const style = {
 
 var SearchUser = (props) => {
   return (
-    <div class="ui segment">
-      <form class="ui form">
-        <div class="ui field">
-          <div class="ui header small">Friend Search</div>
+    <div className="ui segment">
+      <form className="ui form">
+        <div className="ui field">
+          <div className="ui header small">Friend Search</div>
           <input value={props.userSearch} onChange={props.onUserSearch}/>
         </div>
-        <button class="ui button"
+        <button className="ui button"
           style= {style}
           onClick={props.onUserSearchClick}>
           Search

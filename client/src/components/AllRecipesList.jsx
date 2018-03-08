@@ -4,31 +4,31 @@ import RecipeEntry from './RecipeEntry.jsx';
 var AllRecipesList = (props) => {
   if (props.recipeList.length === 0) {
     return (
-      <div class="ui segment">
+      <div className="ui segment">
         <h3>All Recipes </h3>
         <div>No recipes found.</div>
       </div>
     )
   } else {
     return (
-      <div class="ui segment">
+      <div className="ui segment">
         <h3>All Recipes </h3>
 
-        <div class="ui five link cards">
+        <div className="ui five link cards">
           {props.recipeList.map((recipe) =>
-            <div class="card" onClick = {() => props.onRecipeClick(recipe)}>
+            <div className="card" onClick = {() => props.onRecipeClick(recipe)}>
 
-              <div class="image">
+              <div className="image">
                 <img src={recipe.image}/>
               </div>
 
-              <div class="content">
-                <div class="header">{recipe.title}</div>
+              <div className="content">
+                <div className="header">{recipe.title}</div>
               </div>
 
-              <div class="extra content">
-                <span class="right floated">
-                  <i class="heart outline icon"></i>
+              <div className="extra content">
+                <span className="right floated">
+                  <i className="heart outline icon"></i>
                 </span>
                 <span>
                   Likes: {recipe.likes}
@@ -38,7 +38,7 @@ var AllRecipesList = (props) => {
             </div>
           )}
 
-        </div>      
+        </div>
       </div>
     );
   }

@@ -5,32 +5,32 @@ import RecipeEntry from './RecipeEntry.jsx';
 var FavoritesList = (props) => {
   if (props.favoriteList.length === 0) {
     return (
-      <div class="ui segment">
+      <div className="ui segment">
         <h3>{props.currentUser} Favorites </h3>
         <div>No favorites yet.</div>
       </div>
     )
   } else {
     return (
-      <div class="ui segment">
+      <div className="ui segment">
         <h3>{props.currentUser} Favorites </h3>
 
-        <div class="ui five link cards">
+        <div className="ui five link cards">
           {props.favoriteList.map((recipe) =>
 
-            <div class="card" onClick = {() => props.onRecipeClick(recipe)}>
+            <div className="card" onClick = {() => props.onRecipeClick(recipe)}>
 
-              <div class="image">
+              <div className="image">
                 <img src={recipe.image}/>
               </div>
 
-              <div class="content">
-                <div class="header">{recipe.title}</div>
+              <div className="content">
+                <div className="header">{recipe.title}</div>
               </div>
 
             </div>
           )}
-        </div>    
+        </div>
       </div>
     );
   }
