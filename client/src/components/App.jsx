@@ -7,11 +7,10 @@ import SearchRecipe from './SearchRecipe.jsx';
 import FocalRecipe from './FocalRecipe.jsx';
 import RecipeEntry from './RecipeEntry.jsx';
 import SearchUser from './SearchUser.jsx';
+import Signup from './Signup.jsx';
+import Login from './Login.jsx';
 import Nav from './Nav.jsx';
-
-const style = {
-  color: "#88C057"
-}
+import '../styles/app.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,8 +23,12 @@ class App extends React.Component {
       userSearch: '',
       recipeSearch: '',
       favoriteError: false,
-      favoriteSuccess: false
+      favoriteSuccess: false,
+      loggedIn: false,
     };
+
+    this.signupSubmit = this.signupSubmit.bind(this);
+    this.loginSubmit = this.loginSubmit.bind(this);
     this.onRecipeClick = this.onRecipeClick.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.onUserSearchClick = this.onUserSearchClick.bind(this);
@@ -34,18 +37,70 @@ class App extends React.Component {
     this.onRecipeSearchClick = this.onRecipeSearchClick.bind(this);
   }
 
+  signupSubmit(signup) {
+    let email = signup.email;
+    let username = signup.username;
+    let password = signup.password;
+    $.ajax({
+      type: 'POST',
+      url: '/signup',
+      data: {
+              email: `${email}`,
+              username: `${username}`,
+              password: `${password}`
+            },
+      success: (res) => {
+        if (res.status === 200) {
+          this.setState({
+            loggedIn: true
+          });
+        };
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  loginSubmit(login) {
+    let username = login.username;
+    let password = login.password;
+    $.ajax({
+      type: 'POST',
+      url: '/login',
+      data: {
+              username: `${username}`,
+              password: `${password}`
+            },
+      success: (res) => {
+        if (res.status === 200) {
+          this.setState({
+            loggedIn: true
+          });
+        };
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  logoutSubmit() {
+    $.get('/logout');
+  }
+
   //When recipe in either favorites or all recipes list is clicked, make API request for more detailed data object for target recipe and load into focal recipe component
   onRecipeClick (recipe) {
     var component = this;
     $.ajax({
       type: 'GET',
       url: '/recipe/' + recipe.id,
-      success: function(recipe) {
+      success: (recipe) => {
         component.setState({
           focalRecipe: recipe
         });
       },
-      error: function(err) {
+      error: (err) => {
         console.log(err);
       }
     });
@@ -164,23 +219,25 @@ class App extends React.Component {
   render() {
     return (
       <div className="ui container">
-      <Nav />
-      <div className="ui two column stackable grid">
-        <div className="ten wide column">
-          <div className="ui segment">
-            <div >
-              <FocalRecipe
-              focalRecipe = {this.state.focalRecipe}
-              recipeList = {this.state.recipeList}
-              addFavorite = {this.addFavorite}
-              favoriteError = {this.state.favoriteError}
-              favoriteSuccess = {this.state.favoriteSuccess}
-              />
+        <Nav />
+        <Signup signupSubmit={this.signupSubmit}/>
+        <Login loginSubmit={this.loginSubmit}/>
+        <div className="ui two column stackable grid">
+          <div className="ten wide column">
+            <div className="ui segment">
+              <div >
+                <FocalRecipe
+                focalRecipe = {this.state.focalRecipe}
+                recipeList = {this.state.recipeList}
+                addFavorite = {this.addFavorite}
+                favoriteError = {this.state.favoriteError}
+                favoriteSuccess = {this.state.favoriteSuccess}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="six wide column">
+          <div className="six wide column">
             <div>
               <SearchRecipe
               onRecipeSearch = {this.onRecipeSearch}
@@ -194,19 +251,19 @@ class App extends React.Component {
               onUserSearch = {this.onUserSearch}
               />
             </div>
+          </div>
         </div>
-      </div>
 
-      <FavoritesList
-      favoriteList = {this.state.favoriteList}
-      onRecipeClick = {this.onRecipeClick}
-      currentUser = {this.state.currentUser}
-      />
+        <FavoritesList
+        favoriteList = {this.state.favoriteList}
+        onRecipeClick = {this.onRecipeClick}
+        currentUser = {this.state.currentUser}
+        />
 
-      <AllRecipesList
-      onRecipeClick = {this.onRecipeClick}
-      recipeList= {this.state.recipeList}
-      />
+        <AllRecipesList
+        onRecipeClick = {this.onRecipeClick}
+        recipeList= {this.state.recipeList}
+        />
 
       </div>
     );
