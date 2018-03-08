@@ -9,7 +9,6 @@ const spoonacularHelpers = require('../helpers/spoonacularHelpers.js');
 const db = require('../database-mongo/index.js');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-//Serves up index.html file
 app.use(express.static(__dirname + '/../client/dist'));
 
 //Save endpoint for database that will save a favorited recipe
