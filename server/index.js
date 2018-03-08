@@ -11,6 +11,27 @@ const db = require('../database-mongo/index.js');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/../client/dist'));
 
+app.get('/*', (req, res) => {
+  res.redirect('/');
+});
+
+app.post('/signup', (req, res) => {
+  const newUser = req.body;
+  db.Save(newUser)
+    .then(() => {
+      console.log(`Successfully stored a new user ${newUser}`);
+    })
+  // Save user to db here with db.Save(newUser);
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.clearCookie('loggedIn');
+    req.logout();
+    res.redirect('/login');
+  });
+});
+
 //Save endpoint for database that will save a favorited recipe
 //sample body object
 //{ username: 'greg7',

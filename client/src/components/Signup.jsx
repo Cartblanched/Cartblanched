@@ -30,7 +30,7 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="signup-background">
         <Grid
           textAlign="center"
           verticalAlign="middle"
