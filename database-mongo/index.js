@@ -3,9 +3,17 @@ const Promise = require("bluebird");
 
 mongoose.connect(process.env.MONGO);
 
+const Schema = mongoose.Schema;
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const userSchema = mongoose.Schema({
+  username: String,
+  password: String,
+  email: String,
+  favorites: [Schema.Types.Mixed]
+});
 
 let userFavoriteSchema = mongoose.Schema({
   username: String,
