@@ -33,5 +33,7 @@ bower_components/
 
 # Environment variable
 .env
+bundle.js
+.gitignore
 
 bundle.js
