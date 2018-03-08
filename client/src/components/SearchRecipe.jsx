@@ -6,15 +6,15 @@ const style = {
 
 var SearchRecipe = (props) => {
   return (
-    <div class="ui segment">
-      <form class="ui form">
-        <div class="field">
-          <div class="ui header small">Search Recipe</div>
+    <div className="ui segment">
+      <form className="ui form">
+        <div className="field">
+          <div className="ui header small">Search Recipe</div>
           <input value={props.recipeSearch} name="search-recipe" type="text" onChange={props.onRecipeSearch}/>
         </div>
           <button
             style={style}
-            class="ui button"
+            className="ui button"
             onClick={props.onRecipeSearchClick}>
             Search
           </button>

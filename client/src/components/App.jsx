@@ -7,6 +7,7 @@ import SearchRecipe from './SearchRecipe.jsx';
 import FocalRecipe from './FocalRecipe.jsx';
 import RecipeEntry from './RecipeEntry.jsx';
 import SearchUser from './SearchUser.jsx';
+import Nav from './Nav.jsx';
 
 const style = {
   color: "#88C057"
@@ -162,10 +163,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div class="ui container">
-      <div class="ui two column stackable grid">
-        <div class="ten wide column">
-          <div class="ui segment">
+      <div className="ui container">
+      <Nav />
+      <div className="ui two column stackable grid">
+        <div className="ten wide column">
+          <div className="ui segment">
             <div >
               <FocalRecipe
               focalRecipe = {this.state.focalRecipe}
@@ -178,7 +180,7 @@ class App extends React.Component {
           </div>
         </div>
 
-        <div class="six wide column">
+        <div className="six wide column">
             <div>
               <SearchRecipe
               onRecipeSearch = {this.onRecipeSearch}

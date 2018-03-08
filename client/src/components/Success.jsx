@@ -2,7 +2,7 @@ import React from 'react';
 
 var SuccessMessage = (props) => {
   return (
-    <div class="ui compact positive message">
+    <div className="ui compact positive message">
       <p>{props.message}</p>
     </div>
   );
