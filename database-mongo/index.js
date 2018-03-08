@@ -12,7 +12,8 @@ const userSchema = mongoose.Schema({
   username: String,
   password: String,
   email: String,
-  favorites: [Schema.Types.Mixed]
+  favorites: [Schema.Types.Mixed],
+  friends: [String]
 });
 
 let userFavoriteSchema = mongoose.Schema({

@@ -11,10 +11,6 @@ const db = require('../database-mongo/index.js');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/../client/dist'));
 
-app.get('/*', (req, res) => {
-  res.redirect('/');
-});
-
 app.post('/signup', (req, res) => {
   const newUser = req.body;
   db.Save(newUser)
@@ -70,10 +66,13 @@ app.get('/recipes', (req, res) => {
 
 //Recipe endpoint that routes to spoonacular API called based on recipe ID
 //sample request: localhost:3000/recipe/615374
+
 app.get('/recipe/:id', (req, res) => {
   var recipeID = req.params.id;
   spoonacularHelpers.getIngredients(recipeID)
-    .then(data => res.send(data));
+    .then((data) => {
+      res.send(data);
+    });
 });
 
 //Send text endpoint that will send a text to a phonenumber
@@ -85,6 +84,9 @@ app.post('/sendText', bodyParser.json(), (req, res) => {
     .then(res.send('message sent'));
 });
 
+app.get('/*', (req, res) => {
+  res.redirect('/');
+});
 
 
 app.listen(process.env.PORT || 3000, () => console.log('Cartblanched listening on port 3000!'))
