@@ -1,5 +1,13 @@
 import React from 'react';
 import $ from 'jquery';
+import { withRouter } from 'react-router';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 
 import AllRecipesList from './AllRecipesList.jsx';
 import FavoritesList from './FavoritesList.jsx';
@@ -218,53 +226,87 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="ui container">
+      <div>
         <Nav />
-        <Signup signupSubmit={this.signupSubmit}/>
-        <Login loginSubmit={this.loginSubmit}/>
-        <div className="ui two column stackable grid">
-          <div className="ten wide column">
-            <div className="ui segment">
-              <div >
-                <FocalRecipe
-                focalRecipe = {this.state.focalRecipe}
-                recipeList = {this.state.recipeList}
-                addFavorite = {this.addFavorite}
-                favoriteError = {this.state.favoriteError}
-                favoriteSuccess = {this.state.favoriteSuccess}
+
+        <Route
+          exact path="/login"
+          render={ () =>
+            <div className="ui container">
+              <Login loginSubmit={this.loginSubmit}/>
+            </div>
+          }
+        />
+
+        <div className="ui container">
+
+          {/*<h1 class="ui aligned center header segment">
+            <img src="..dist/egg-icon.png"/>
+            Cartblanched
+          </h1>*/}
+
+          <Route
+            exact path="/signup"
+            render={ () =>
+              <Signup signupSubmit={this.signupSubmit}/>
+            }
+          />
+
+          <Route
+            exact path="/favorites"
+            render={ () =>
+              <FavoritesList
+                favoriteList = {this.state.favoriteList}
+                onRecipeClick = {this.onRecipeClick}
+                currentUser = {this.state.currentUser}
+              />
+            }
+          />
+
+          <Route
+            exact path="/"
+            render={ () =>
+              <div>
+                <div className="ui two column stackable grid">
+                  <div className="ten wide column">
+                    <div className="ui segment">
+                      <div >
+                        <FocalRecipe
+                        focalRecipe = {this.state.focalRecipe}
+                        recipeList = {this.state.recipeList}
+                        addFavorite = {this.addFavorite}
+                        favoriteError = {this.state.favoriteError}
+                        favoriteSuccess = {this.state.favoriteSuccess}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="six wide column">
+                    <div>
+                      <SearchRecipe
+                      onRecipeSearch = {this.onRecipeSearch}
+                      onRecipeSearchClick = {this.onRecipeSearchClick}
+                      recipeSearch = {this.state.recipeSearch}
+                      />
+
+                      <SearchUser
+                      onUserSearchClick = {this.onUserSearchClick}
+                      userSearch = {this.state.userSearch}
+                      onUserSearch = {this.onUserSearch}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <AllRecipesList
+                onRecipeClick = {this.onRecipeClick}
+                recipeList= {this.state.recipeList}
                 />
               </div>
-            </div>
-          </div>
-
-          <div className="six wide column">
-            <div>
-              <SearchRecipe
-              onRecipeSearch = {this.onRecipeSearch}
-              onRecipeSearchClick = {this.onRecipeSearchClick}
-              recipeSearch = {this.state.recipeSearch}
-              />
-
-              <SearchUser
-              onUserSearchClick = {this.onUserSearchClick}
-              userSearch = {this.state.userSearch}
-              onUserSearch = {this.onUserSearch}
-              />
-            </div>
-          </div>
+            }
+          />
         </div>
-
-        <FavoritesList
-        favoriteList = {this.state.favoriteList}
-        onRecipeClick = {this.onRecipeClick}
-        currentUser = {this.state.currentUser}
-        />
-
-        <AllRecipesList
-        onRecipeClick = {this.onRecipeClick}
-        recipeList= {this.state.recipeList}
-        />
-
       </div>
     );
   }
@@ -373,4 +415,5 @@ var sampleRecipe =
     "image": "https://spoonacular.com/recipeImages/197109-556x370.jpg"
 }
 
-export default App;
+const AppWithRouter = withRouter(App);
+export default AppWithRouter;
