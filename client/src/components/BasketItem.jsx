@@ -30,33 +30,3 @@ function BasketItem(props) {
 }
 
 export default BasketItem;
-
-/*
-#FBCB5C
-#F29F6B
-    <div className="card">
-      <img className='right floated mini image' src={props.item.mediumImage}/>
-      <div className="content">
-        <div className="header">{props.item.name}</div>
-      </div>
-
-      <div className="extra content">
-        <span>
-          Price: ${props.item.salePrice}
-        </span>
-      </div>
-    </div>
-
-    <div class="card">
-    <div class="content">
-      <img class="tiny ui image" src={props.item.mediumImage} />
-      <div class="header">
-        {props.item.name}
-      </div>
-
-      <div class="description">
-        Price: ${props.item.salePrice}
-      </div>
-    </div>
-  </div>
-*/
