@@ -125,13 +125,13 @@ app.get('/groceries', (req, res) => {
   var terms = req.body.searchTerms;
   walmartHelpers.getProducts(terms, function (results) {
     res.status(200).send(groceries)
-  })
+  });
 });
 
 app.get('/*', (req, res) => {
   res.redirect('/');
 });
 
-app.listen(process.env.PORT || 3000, () => console.log('Cartblanched listening on port 3000!'))
+app.listen(process.env.PORT || 3000, () => console.log('Cartblanched listening on port 3000!'));
 
 module.exports = app;

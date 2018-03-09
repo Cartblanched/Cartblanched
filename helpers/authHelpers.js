@@ -32,7 +32,7 @@ let comparePassword = (attemptedPassword, username, callback) => {
     bcrypt.compare(attemptedPassword, existingPassword, (err, isMatch) => {
       callback(isMatch);
     });
-  })
+  });
 }
 
 

@@ -13,5 +13,5 @@ const getProducts = function (terms, cb) {
 }
 
 const searchOneTerm = function (term) {
-    return axios.get(`http://api.walmartlabs.com/v1/search?apiKey=${process.env.WALMART_KEY}&query=${term}&sort=relevance`)
+  return axios.get(`http://api.walmartlabs.com/v1/search?apiKey=${process.env.WALMART_KEY}&query=${term}&sort=relevance`)
 }
