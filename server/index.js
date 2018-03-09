@@ -6,6 +6,7 @@ const recipe = require('../database-mongo/RecipeIDData.js');
 const recipeList = require('../database-mongo/RecipeListData.js');
 const twilioHelpers = require('../helpers/twilioHelpers.js');
 const spoonacularHelpers = require('../helpers/spoonacularHelpers.js');
+const walmartHelpers = require('../helpers/walmartHelpers.js');
 const db = require('../database-mongo/index.js');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -84,6 +85,29 @@ app.post('/sendText', bodyParser.json(), (req, res) => {
   twilioHelpers.sendMessage(phoneNumber, ingredients)
     .then(res.send('message sent'));
 });
+
+app.get('/search', (req, res) => {
+  // get search term array from req.body
+  var terms = req.body.terms;
+  walmartHelpers.getProducts(terms, function (results) {
+    res.send(results)
+  })
+});
+
+  const searchOneTerm = function (term) {
+    axios.get(`http://api.walmartlabs.com/v1/search?apiKey=${walmartLabsKey}&query=${term}&sort=relevance`)
+      .then(response => {
+        console.log(response, '<-- response from walmart term search');
+      })
+      .catch(error => {
+        console.log('walmart search error');
+      })
+
+  searchOneTerm(term);
+  }
+})
+
+
 
 
 
