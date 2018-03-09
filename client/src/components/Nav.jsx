@@ -5,36 +5,27 @@ import { Menu, Segment } from 'semantic-ui-react';
 class Nav extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      activeItem: 'Home'
-    }
-    this.handleItemClick = this.handleItemClick.bind(this);
-  }
-
-  handleItemClick(e, { name }) {
-    this.setState({
-      activeItem: name
-    });
   }
 
   render() {
-    const { activeItem } = this.state;
+    const activeItem = this.props.activeItem;
 
-    return (
-      <div>
+    let loginComponent = null;
+    if (this.props.loginStatus) {
+      loginComponent = (
         <Menu pointing secondary>
           <Link to="/">
             <Menu.Item
               name='Home'
               active={activeItem === 'Home'}
-              onClick={this.handleItemClick}
+              onClick={this.props.handleNavItemClick}
             />
           </Link>
           <Link to="/favorites">
           <Menu.Item
             name='Favorites'
             active={activeItem === 'Favorites'}
-            onClick={this.handleItemClick}
+            onClick={this.props.handleNavItemClick}
           />
           </Link>
           <Menu.Menu position='right'>
@@ -42,31 +33,58 @@ class Nav extends React.Component {
               <Menu.Item
                 name='Basket'
                 active={activeItem === 'Basket'}
-                onClick={this.handleItemClick}
+                onClick={this.props.handleNavItemClick}
               />
             </Link>
-            <Link to="/signup">
+            <Menu.Item
+              name='Logout'
+              active={activeItem === 'Logout'}
+              onClick={this.props.handleNavItemClick}
+              href="/logout"
+            />
+          </Menu.Menu>
+        </Menu>
+      )
+    } else {
+      loginComponent = (
+        <Menu pointing secondary>
+          <Link to="/">
+            <Menu.Item
+              name='Home'
+              active={activeItem === 'Home'}
+              onClick={this.props.handleNavItemClick}
+            />
+          </Link>
+          <Menu.Menu position='right'>
+            <Link to="/basket">
               <Menu.Item
-                name='Signup'
-                active={activeItem === 'Signup'}
-                onClick={this.handleItemClick}
+                name='Basket'
+                active={activeItem === 'Basket'}
+                onClick={this.props.handleNavItemClick}
               />
             </Link>
             <Link to="/login">
               <Menu.Item
                 name='Login'
                 active={activeItem === 'Login'}
-                onClick={this.handleItemClick}
+                onClick={this.props.handleNavItemClick}
               />
             </Link>
-            <Menu.Item
-              name='Logout'
-              active={activeItem === 'Logout'}
-              onClick={this.handleItemClick}
-              href="/logout"
-            />
+            <Link to="/signup">
+              <Menu.Item
+                name='Signup'
+                active={activeItem === 'Signup'}
+                onClick={this.props.handleNavItemClick}
+              />
+            </Link>
           </Menu.Menu>
         </Menu>
+      )
+    }
+
+    return (
+      <div>
+        {loginComponent}
       </div>
     );
   }

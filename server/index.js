@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
-const session = require('express-session');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
+
 const recipe = require('../database-mongo/RecipeIDData.js');
 const recipeList = require('../database-mongo/RecipeListData.js');
 const twilioHelpers = require('../helpers/twilioHelpers.js');
@@ -15,7 +17,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/../client/dist'));
-
+app.use(cookieParser());
 app.use(session({
   secret: 'secrettoken',
   resave: false,
@@ -33,7 +35,7 @@ app.post('/signup', (req, res) => {
       };
       db.saveUser(newUser)
         .then((newUser) => {
-          res.status(201).send();
+          res.status(200).send();
           console.log(`Successfully stored a new user: ${newUser}`);
         })
     })
@@ -50,6 +52,7 @@ app.post('/login', (req, res) => {
         if (match) {
           auth.createSession(req, res, user);
           console.log(`Session has been created for ${user}`);
+          res.status(200).send();
         } else {
           res.redirect('/login');
         }
@@ -60,6 +63,7 @@ app.post('/login', (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
+    res.clearCookie('loggedIn');
     console.log('You are logged out');
     res.redirect('/login');
   });
@@ -132,6 +136,6 @@ app.get('/*', (req, res) => {
   res.redirect('/');
 });
 
-app.listen(process.env.PORT || 3000, () => console.log('Cartblanched listening on port 3000!'));
+app.listen(process.env.PORT || 3000, () => console.log('Cartblanched listening on port 3000'));
 
 module.exports = app;
