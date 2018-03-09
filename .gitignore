@@ -34,5 +34,6 @@ bower_components/
 # Environment variable
 .env
 
+
 # Webpack output
 bundle.js

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import ErrorMessage from './Error.jsx';
 import SuccessMessage from './Success.jsx';
+import Ingredient from './Ingredient.jsx';
 
 
 const inputStyle = {
@@ -52,41 +53,46 @@ class FocalRecipe extends React.Component {
     })
   }
 
-
   //send text message to user-inputted phone number, containing ingredients from recipe data loaded into the focal recipe component
   sendNumber() {
-    var phoneNumber = '1' + this.state.areaCode + this.state.prefix + this.state.lineNum;
-    if (phoneNumber.length !== 11) {
-      this.setState({
-        phoneError: true,
-        phoneSuccess: false
-      });
-    } else {
-      this.setState({
-        phoneError: false
-      });
-      //Overly complex algorithm for creating ingredients string to send through text
-      var ingredientsMessage = 'Could you please make me ' + this.props.focalRecipe.title + '? ' + 'The ingredients needed are: ' + this.props.focalRecipe.extendedIngredients.reduce((ingredients, ingredient) => ingredients + ingredient.amount + ' ' + ingredient.unit + ' ' + ingredient.name + ', ', '');
-      ingredientsMessage = ingredientsMessage.slice(0, -2);
-      var component = this;
-      $.ajax({
-        method: 'POST',
-        url: '/sendText',
-        data: JSON.stringify({
-          number: phoneNumber,
-          ingredients: ingredientsMessage
-        }),
-        contentType: 'application/json',
-        success: (res) => {
-          component.setState({
-            phoneSuccess: true
-          })
-        },
-        error: (err) => {
-          console.log('phone number failed to send');
-        }
-      });
-    }
+    console.log('Should be texting the following ingredients: ');
+    this.props.focalRecipe.extendedIngredients.forEach((ingredient) => {
+      if (ingredient.checked) {
+        console.log(ingredient);
+      }
+    })
+    // var phoneNumber = '1' + this.state.areaCode + this.state.prefix + this.state.lineNum;
+    // if (phoneNumber.length !== 11) {
+    //   this.setState({
+    //     phoneError: true,
+    //     phoneSuccess: false
+    //   });
+    // } else {
+    //   this.setState({
+    //     phoneError: false
+    //   });
+    //   //Overly complex algorithm for creating ingredients string to send through text
+    //   var ingredientsMessage = 'Could you please make me ' + this.props.focalRecipe.title + '? ' + 'The ingredients needed are: ' + this.props.focalRecipe.extendedIngredients.reduce((ingredients, ingredient) => ingredients + ingredient.amount + ' ' + ingredient.unit + ' ' + ingredient.name + ', ', '');
+    //   ingredientsMessage = ingredientsMessage.slice(0, -2);
+    //   var component = this;
+    //   $.ajax({
+    //     method: 'POST',
+    //     url: '/sendText',
+    //     data: JSON.stringify({
+    //       number: phoneNumber,
+    //       ingredients: ingredientsMessage
+    //     }),
+    //     contentType: 'application/json',
+    //     success: (res) => {
+    //       component.setState({
+    //         phoneSuccess: true
+    //       })
+    //     },
+    //     error: (err) => {
+    //       console.log('phone number failed to send');
+    //     }
+    //   });
+    // }
   }
 
   render() {
@@ -110,12 +116,10 @@ class FocalRecipe extends React.Component {
           </div>
 
           <div className="extra content">
-            <span>
-              {this.props.focalRecipe.extendedIngredients.map((ingredient) =>
-              <ul> <input type="checkbox"/> {ingredient.originalString} </ul>
-              )}
-            </span>
-          </div>
+            {this.props.focalRecipe.extendedIngredients.map((ingredient) =>
+              <Ingredient handleCheck={this.props.handleCheck} ingredient={ingredient} />
+            )}
+        </div>
           </div>
 
       </div>

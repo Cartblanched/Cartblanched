@@ -8,6 +8,7 @@ const recipeList = require('../database-mongo/RecipeListData.js');
 const twilioHelpers = require('../helpers/twilioHelpers.js');
 const spoonacularHelpers = require('../helpers/spoonacularHelpers.js');
 const auth = require('../helpers/authHelpers.js');
+const walmartHelpers = require('../helpers/walmartHelpers.js');
 const db = require('../database-mongo/index.js');
 
 const app = express();
@@ -102,10 +103,13 @@ app.get('/recipes', (req, res) => {
 
 //Recipe endpoint that routes to spoonacular API called based on recipe ID
 //sample request: localhost:3000/recipe/615374
+
 app.get('/recipe/:id', (req, res) => {
   var recipeID = req.params.id;
   spoonacularHelpers.getIngredients(recipeID)
-    .then(data => res.send(data));
+    .then((data) => {
+      res.send(data);
+    });
 });
 
 //Send text endpoint that will send a text to a phonenumber
@@ -117,6 +121,12 @@ app.post('/sendText', bodyParser.json(), (req, res) => {
     .then(res.send('message sent'));
 });
 
+app.get('/groceries', (req, res) => {
+  var terms = req.body.searchTerms;
+  walmartHelpers.getProducts(terms, function (results) {
+    res.status(200).send(groceries)
+  })
+  
 app.get('/*', (req, res) => {
   res.redirect('/');
 });

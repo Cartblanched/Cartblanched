@@ -11,7 +11,8 @@ const userSchema = mongoose.Schema({
   username: {type: String, unique: true},
   password: String,
   email: String,
-  favorites: [Schema.Types.Mixed]
+  favorites: [Schema.Types.Mixed],
+  friends: [String]
 });
 
 let User = mongoose.model('User', userSchema);
