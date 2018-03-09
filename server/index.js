@@ -86,29 +86,12 @@ app.post('/sendText', bodyParser.json(), (req, res) => {
     .then(res.send('message sent'));
 });
 
-app.get('/search', (req, res) => {
-  // get search term array from req.body
-  var terms = req.body.terms;
+app.get('/groceries', (req, res) => {
+  var terms = req.body.searchTerms;
   walmartHelpers.getProducts(terms, function (results) {
-    res.send(results)
+    res.status(200).send(groceries)
   })
 });
-
-  const searchOneTerm = function (term) {
-    axios.get(`http://api.walmartlabs.com/v1/search?apiKey=${walmartLabsKey}&query=${term}&sort=relevance`)
-      .then(response => {
-        console.log(response, '<-- response from walmart term search');
-      })
-      .catch(error => {
-        console.log('walmart search error');
-      })
-
-  searchOneTerm(term);
-  }
-})
-
-
-
 
 
 app.listen(process.env.PORT || 3000, () => console.log('Cartblanched listening on port 3000!'))
