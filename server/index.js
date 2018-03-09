@@ -6,6 +6,7 @@ const recipe = require('../database-mongo/RecipeIDData.js');
 const recipeList = require('../database-mongo/RecipeListData.js');
 const twilioHelpers = require('../helpers/twilioHelpers.js');
 const spoonacularHelpers = require('../helpers/spoonacularHelpers.js');
+const walmartHelpers = require('../helpers/walmartHelpers.js');
 const db = require('../database-mongo/index.js');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -84,6 +85,12 @@ app.post('/sendText', bodyParser.json(), (req, res) => {
     .then(res.send('message sent'));
 });
 
+app.get('/groceries', (req, res) => {
+  var terms = req.body.searchTerms;
+  walmartHelpers.getProducts(terms, function (results) {
+    res.status(200).send(groceries)
+  })
+  
 app.get('/*', (req, res) => {
   res.redirect('/');
 });
