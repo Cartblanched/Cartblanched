@@ -126,7 +126,8 @@ app.get('/groceries', (req, res) => {
   walmartHelpers.getProducts(terms, function (results) {
     res.status(200).send(groceries)
   })
-  
+});
+
 app.get('/*', (req, res) => {
   res.redirect('/');
 });

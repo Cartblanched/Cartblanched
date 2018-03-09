@@ -19,6 +19,7 @@ import Signup from './Signup.jsx';
 import Login from './Login.jsx';
 import Nav from './Nav.jsx';
 import '../styles/app.css';
+import BasketList from './BasketList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -264,6 +265,11 @@ class App extends React.Component {
           />
 
           <Route
+            exact path='/basket'
+            component={BasketList}
+          />
+
+          <Route
             exact path="/"
             render={ () =>
               <div>
@@ -388,25 +394,29 @@ var sampleRecipe =
             "originalString": "1 (12-oz.) can beer",
             "name": "beer",
             "amount": 12,
-            "unit": "oz"
+            "unit": "oz",
+            checked: false
         },
         {
             "originalString": "1 tablespoon canola oil",
             "name": "canola oil",
             "amount": 1,
-            "unit": "tablespoon"
+            "unit": "tablespoon",
+            checked: false
         },
         {
             "originalString": "1 (3- to 4-lb.) chuck roast, trimmed",
             "name": "chuck roast",
             "amount": 3,
-            "unit": "lb"
+            "unit": "lb",
+            checked: false
         },
         {
             "originalString": "1 (0.7-oz.) envelope Italian dressing mix",
             "name": "ranch dressing mix",
             "amount": 0.7,
-            "unit": "oz"
+            "unit": "oz",
+            checked: false
         }
     ],
     "title": "Four-Ingredient Slow-Cooker Pot Roast",
