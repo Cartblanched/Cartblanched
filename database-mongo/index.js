@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Promise = require("bluebird");
-
 mongoose.connect(process.env.MONGO);
 
 const Schema = mongoose.Schema;
@@ -9,11 +8,13 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const userSchema = mongoose.Schema({
-  username: String,
+  username: {type: String, unique: true},
   password: String,
   email: String,
   favorites: [Schema.Types.Mixed]
 });
+
+let User = mongoose.model('User', userSchema);
 
 let userFavoriteSchema = mongoose.Schema({
   username: String,
@@ -28,7 +29,6 @@ let userFavoriteSchema = mongoose.Schema({
 });
 
 let UserFavorite = mongoose.model('UserFavorite', userFavoriteSchema);
-
 
 //Returning list of a user's favorites, sorted descending by popularity('likes')
 let retrieve = (username) => {
@@ -47,13 +47,30 @@ let retrieve = (username) => {
   });
 };
 
-//Saving only relevant information from recipe object passed from front-end (see schema)
-//Auto-generates a "now date"
-let save = (documentObj) => {
-  // using this code block to check if recipe is already duplicated in database
-  // for user (we could have used _id to prevent duplicates, but because a user can have multiple recipes and a recipe can have multiple users, we saw no easy property of the schema to set as the _id... refer to Mongoose docs if unsure about why setting a _id property prevents duplicates)
+
+let saveUser = (userData) => {
+  return new Promise((resolve, reject) => {
+    User.find({'username': userData.username})
+      .exec((err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          let user = new User({
+            username: userData.username,
+            password: userData.password,
+            email: userData.email
+          });
+          user.save((err, newUser) => {
+            if (err) reject(err);
+            resolve(newUser);
+          });
+        }
+    });
+  });
+};
+
+let saveRecipe = (documentObj) => {
   var duplicate = false;
-  //return the output of the below function, which will be a promise
   return retrieve(documentObj.username).then(data => {
     for (var i = 0; i < data.length; i++) {
       if (data[i].title === documentObj.title) {
@@ -62,7 +79,6 @@ let save = (documentObj) => {
       }
     }
   }).then(data => {
-    //if this is not a duplicate recipe, save to database
     if (!duplicate) {
       return new Promise(function(resolve, reject) {
         let document = new UserFavorite({
@@ -78,7 +94,6 @@ let save = (documentObj) => {
           resolve(favorite);
         });
       });
-    //else return (empty?) promise
     } else {
       return new Promise(function(resolve, reject) {
         resolve("Duplicate entry");
@@ -88,6 +103,8 @@ let save = (documentObj) => {
 };
 
 module.exports = {
-  save : save,
-  retrieve : retrieve
+  saveRecipe: saveRecipe,
+  saveUser: saveUser,
+  retrieve: retrieve,
+  User: User
 };

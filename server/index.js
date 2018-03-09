@@ -1,33 +1,65 @@
 require('dotenv').config();
 const express = require('express');
-const app = express();
+const session = require('express-session');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 const recipe = require('../database-mongo/RecipeIDData.js');
 const recipeList = require('../database-mongo/RecipeListData.js');
 const twilioHelpers = require('../helpers/twilioHelpers.js');
 const spoonacularHelpers = require('../helpers/spoonacularHelpers.js');
+const auth = require('../helpers/authHelpers.js');
 const db = require('../database-mongo/index.js');
+
+const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/../client/dist'));
 
-app.get('/*', (req, res) => {
-  res.redirect('/');
-});
+app.use(session({
+  secret: 'secrettoken',
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.post('/signup', (req, res) => {
-  const newUser = req.body;
-  db.Save(newUser)
-    .then(() => {
-      console.log(`Successfully stored a new user ${newUser}`);
+  bcrypt.hash(req.body.password, 10)
+    .then((hash) => {
+      let newUser =
+      {
+        username: req.body.username,
+        password: hash,
+        email: req.body.email,
+      };
+      db.saveUser(newUser)
+        .then((newUser) => {
+          res.status(201).send();
+          console.log(`Successfully stored a new user: ${newUser}`);
+        })
     })
-  // Save user to db here with db.Save(newUser);
+});
+
+app.post('/login', (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  db.User.find({'username': username}).exec((err, user) => {
+    if (!user) {
+      res.redirect('/signup');
+    } else {
+      auth.comparePassword(password, username, (match) => {
+        if (match) {
+          auth.createSession(req, res, user);
+          console.log(`Session has been created for ${user}`);
+        } else {
+          res.redirect('/login');
+        }
+      });
+    }
+  });
 });
 
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.clearCookie('loggedIn');
-    req.logout();
+    console.log('You are logged out');
     res.redirect('/login');
   });
 });
@@ -42,7 +74,7 @@ app.get('/logout', (req, res) => {
 // }
 app.post('/db/save', (req, res) => {
   var documentObj = req.body;
-  db.save(documentObj)
+  db.saveRecipe(documentObj)
     .then(response => res.send('saved to db'));
 });
 
@@ -85,7 +117,9 @@ app.post('/sendText', bodyParser.json(), (req, res) => {
     .then(res.send('message sent'));
 });
 
-
+app.get('/*', (req, res) => {
+  res.redirect('/');
+});
 
 app.listen(process.env.PORT || 3000, () => console.log('Cartblanched listening on port 3000!'))
 

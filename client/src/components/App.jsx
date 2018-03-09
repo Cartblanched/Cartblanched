@@ -46,17 +46,11 @@ class App extends React.Component {
   }
 
   signupSubmit(signup) {
-    let email = signup.email;
-    let username = signup.username;
-    let password = signup.password;
+    let obj = { email: `${signup.email}`, username: `${signup.username}`, password: `${signup.password}`};
     $.ajax({
       type: 'POST',
       url: '/signup',
-      data: {
-              email: `${email}`,
-              username: `${username}`,
-              password: `${password}`
-            },
+      data: obj,
       success: (res) => {
         if (res.status === 200) {
           this.setState({
@@ -71,15 +65,11 @@ class App extends React.Component {
   }
 
   loginSubmit(login) {
-    let username = login.username;
-    let password = login.password;
+    let obj = { username: `${login.username}`, password: `${login.password}` };
     $.ajax({
       type: 'POST',
       url: '/login',
-      data: {
-              username: `${username}`,
-              password: `${password}`
-            },
+      data: obj,
       success: (res) => {
         if (res.status === 200) {
           this.setState({

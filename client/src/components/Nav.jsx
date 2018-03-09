@@ -38,10 +38,10 @@ class Nav extends React.Component {
           />
           </Link>
           <Menu.Menu position='right'>
-            <Link to="/cart">
+            <Link to="/basket">
               <Menu.Item
-                name='Cart'
-                active={activeItem === 'Cart'}
+                name='Basket'
+                active={activeItem === 'Basket'}
                 onClick={this.handleItemClick}
               />
             </Link>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import '../styles/forms.css';
 
 class Login extends React.Component {
@@ -19,7 +20,7 @@ class Login extends React.Component {
 
   handleChange(event) {
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.name]: event.target.value
     });
   }
 
@@ -35,6 +36,7 @@ class Login extends React.Component {
           <Grid
             textAlign="center"
             verticalAlign="middle"
+            style={{ height: '100%' }}
           >
             <Grid.Column style={{ maxWidth: 450 }}>
               <Header as="h2" color="teal" textAlign="center">
@@ -46,8 +48,9 @@ class Login extends React.Component {
                     fluid
                     icon="user"
                     iconPosition="left"
-                    placeholder="Username"
-                    value={this.state.username}
+                    placeholder="username"
+                    type="text"
+                    name="username"
                     onChange={this.handleChange}
                   />
                   <Form.Input
@@ -56,7 +59,7 @@ class Login extends React.Component {
                     iconPosition="left"
                     placeholder="Password"
                     type="Password"
-                    value={this.state.password}
+                    name="password"
                     onChange={this.handleChange}
                   />
                   <Button
@@ -69,7 +72,7 @@ class Login extends React.Component {
                 </Segment>
               </Form>
               <Message>
-                New here? <a href='#'> Sign Up</a>
+                New here? <Link to="/signup"> Sign Up</Link>
               </Message>
             </Grid.Column>
           </Grid>
