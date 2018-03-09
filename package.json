@@ -21,10 +21,12 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel": "^6.23.0",
+    "bcrypt": "^1.0.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
+    "express-session": "^1.15.6",
     "jquery": "^3.3.1",
     "lodash": "^4.17.5",
     "mongoose": "^5.0.6",
@@ -52,7 +54,7 @@
     "style-loader": "^0.20.2",
     "supertest": "^3.0.0",
     "url-loader": "^1.0.1",
-    "webpack": "^3.11.0",
+    "webpack": "^4.1.1",
     "webpack-dev-server": "^3.1.0"
   }
 }

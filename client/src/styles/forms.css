@@ -1,26 +1,26 @@
 .login-background {
-  background-image: url("https://images.unsplash.com/photo-1424591093900-514bab956faf?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9ed0101e6e7e48218b8318c0347730d5&auto=format&fit=crop&w=1050&q=80");
+  background-image: url(https://images.unsplash.com/photo-1518171802599-4cd16785f93a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0aa530c8e51ecd741d821663a2b2eb79&auto=format&fit=crop&w=1397&q=80);
   background-repeat: no-repeat;
   background-size: cover;
-  position: fixed;
-  opacity: 0.85;
+  position: absolute;
+  opacity: 0.92;
   padding: 0;
   margin: 0;
-  top: 0;
+  top: 40px;
   left: 0;
   width: 100%;
   height: 100%;
 }
 
 .signup-background {
-  background-image: url(https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=67fb2e7b1fbe39b18b51146234ef38aa&auto=format&fit=crop&w=1050&q=80);
+  background-image: url(https://c1.staticflickr.com/5/4773/25827240817_13d3fd7c09_b.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  position: fixed;
-  opacity: 0.85;
+  position: absolute;
+  opacity: 0.92;
   padding: 0;
   margin: 0;
-  top: 0;
+  top: 40px;
   left: 0;
   width: 100%;
   height: 100%;
