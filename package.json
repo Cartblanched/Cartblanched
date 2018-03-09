@@ -24,6 +24,7 @@
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
@@ -32,6 +33,7 @@
     "mongoose": "^5.0.6",
     "path": "^0.12.7",
     "react": "^16.2.0",
+    "react-cookie": "^1.0.5",
     "react-dom": "^16.2.0",
     "react-popup": "^0.9.2",
     "react-router": "^4.2.0",
@@ -54,7 +56,8 @@
     "style-loader": "^0.20.2",
     "supertest": "^3.0.0",
     "url-loader": "^1.0.1",
-    "webpack": "^4.1.1",
+    "webpack": "^3.11.0",
+    "webpack-cli": "^2.0.10",
     "webpack-dev-server": "^3.1.0"
   }
 }

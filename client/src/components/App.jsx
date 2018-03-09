@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import { withRouter } from 'react-router';
+import cookie from 'react-cookie';
 import {
   BrowserRouter as Router,
   Route,
@@ -34,8 +35,10 @@ class App extends React.Component {
       favoriteError: false,
       favoriteSuccess: false,
       loggedIn: false,
+      activeItem: 'Home'
     };
 
+    this.handleNavItemClick = this.handleNavItemClick.bind(this);
     this.signupSubmit = this.signupSubmit.bind(this);
     this.loginSubmit = this.loginSubmit.bind(this);
     this.onRecipeClick = this.onRecipeClick.bind(this);
@@ -47,17 +50,32 @@ class App extends React.Component {
     this.onIngredientCheck = this.onIngredientCheck.bind(this);
   }
 
+  componentDidMount() {
+    if (cookie.load('loggedIn') === 'true' && this.state.loggedIn === false) {
+      this.setState({
+        loggedIn: true
+      });
+    }
+  }
+
+  handleNavItemClick(e, { name }) {
+    this.setState({
+      activeItem: name
+    });
+  }
+
   signupSubmit(signup) {
     let obj = { email: `${signup.email}`, username: `${signup.username}`, password: `${signup.password}`};
     $.ajax({
       type: 'POST',
       url: '/signup',
       data: obj,
-      success: (res) => {
-        if (res.status === 200) {
+      success: (res, textStatus, jqXHR) => {
+        if (jqXHR.status === 200) {
           this.setState({
-            loggedIn: true
+            activeItem: 'Login'
           });
+          this.props.history.push(`/login`);
         }
       },
       error: (err) => {
@@ -72,11 +90,13 @@ class App extends React.Component {
       type: 'POST',
       url: '/login',
       data: obj,
-      success: (res) => {
-        if (res.status === 200) {
+      success: (res, textStatus, jqXHR) => {
+        if (jqXHR.status === 200) {
           this.setState({
-            loggedIn: true
+            loggedIn: true,
+            activeItem: 'Home'
           });
+          this.props.history.push(`/`);
         }
       },
       error: (err) => {
@@ -229,7 +249,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
+        <Nav
+          loginStatus={this.state.loggedIn}
+          handleNavItemClick={this.handleNavItemClick}
+          activeItem={this.state.activeItem}
+        />
 
         <Route
           exact path="/login"

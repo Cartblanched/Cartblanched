@@ -17,8 +17,8 @@ let checkUser = (req, res, next) => {
 
 let createSession = (req, res, newUser) => {
   return req.session.regenerate(() => {
+    res.cookie('loggedIn', 'true', { maxAge: 60 * 60 * 1000 });
     req.session.user = newUser;
-    res.redirect('/');
   });
 };
 
