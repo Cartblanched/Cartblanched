@@ -21,6 +21,7 @@ import Signup from './Signup.jsx';
 import Login from './Login.jsx';
 import Nav from './Nav.jsx';
 import '../styles/app.css';
+import CartList from './CartList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -33,12 +34,14 @@ class App extends React.Component {
       userSearch: '',
       recipeSearch: '',
       basketItems: [],
+      cartItems: [],
       favoriteError: false,
       favoriteSuccess: false,
       loggedIn: false,
       activeItem: 'Home',
       basketLoading: false,
-      recipeLoading: false
+      recipeLoading: false,
+      searchLoading: false
     };
 
     this.handleNavItemClick = this.handleNavItemClick.bind(this);
@@ -50,6 +53,7 @@ class App extends React.Component {
     this.onRecipeSearchClick = this.onRecipeSearchClick.bind(this);
     this.onIngredientCheck = this.onIngredientCheck.bind(this);
     this.createBasket = this.createBasket.bind(this);
+    this.createCart = this.createCart.bind(this);
   }
 
   componentDidMount() {
@@ -134,8 +138,10 @@ class App extends React.Component {
         });
         component.setState({
           focalRecipe: recipe,
-          recipeLoading: false
+          recipeLoading: false,
+          activeItem: 'Home'
         });
+        component.props.history.push('/');
       },
       error: (err) => {
         console.log(err);
@@ -163,6 +169,9 @@ class App extends React.Component {
 
   onRecipeSearchClick(e) {
     e.preventDefault();
+    this.setState({
+      searchLoading: true
+    });
     var searchIngredients;
     if (!this.state.recipeSearch.includes(',')) {
       searchIngredients = this.state.recipeSearch.split(' ').join(', ');
@@ -175,7 +184,8 @@ class App extends React.Component {
       url: '/recipes?ingredients=' + searchIngredients,
       success: (recipesData) => {
         component.setState({
-          recipeList: recipesData
+          recipeList: recipesData,
+          searchLoading: false
         });
       },
       error: (err) => {
@@ -264,6 +274,30 @@ class App extends React.Component {
     }
   }
 
+  createCart() {
+    let cart = [];
+    this.state.basketItems.forEach((basket) => {
+      if (basket.items) {
+        basket.items.forEach((item) => {
+          if (item.carted) {
+            cart.push(item);
+          }
+        })
+      }
+    });
+
+    if (cart.length < 0) {
+      console.log('Need to have items to be added to cart!');
+      return;
+    }
+
+    this.setState({
+      cartItems: this.state.cartItems.concat(cart),
+      activeItem: "Cart"
+    });
+    this.props.history.push('/cart');
+  }
+
   render() {
     return (
       <div>
@@ -292,7 +326,7 @@ class App extends React.Component {
           />
 
           <Route
-            exact path="/favorites"
+            exact path="/faves"
             render={ () =>
               <FavoritesList
                 favoriteList={this.state.favoriteList}
@@ -305,7 +339,20 @@ class App extends React.Component {
           <Route
             exact path='/basket'
             render={ () =>
-              <BasketList items={this.state.basketItems} />
+              <BasketList
+                items={this.state.basketItems}
+                handleCart={this.createCart}
+              />
+            }
+          />
+
+          <Route
+            exact path='/cart'
+            render={ () =>
+              <CartList
+                items={this.state.cartItems}
+                handleCart={this.createCart}
+              />
             }
           />
 
@@ -350,6 +397,7 @@ class App extends React.Component {
                 <AllRecipesList
                   onRecipeClick={this.onRecipeClick}
                   recipeList={this.state.recipeList}
+                  searchLoading={this.state.searchLoading}
                 />
               </div>
             }

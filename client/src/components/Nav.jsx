@@ -23,7 +23,7 @@ class Nav extends React.Component {
               <Image src='https://c1.staticflickr.com/5/4793/38906403910_2e18fe17c6_s.jpg' avatar />
             </Menu.Item>
           </Link>
-          <Link to="/favorites">
+          <Link to="/faves">
             <Menu.Item
               name="Favorites"
               active={activeItem === 'Favorites'}
@@ -33,11 +33,11 @@ class Nav extends React.Component {
             </Menu.Item>
           </Link>
           <Menu.Menu position='right'>
-            <Link to="/basket">
+            <Link to="/cart">
               <Menu.Item
                 className="menuItem"
-                name="Basket"
-                active={activeItem === 'Basket'}
+                name="Cart"
+                active={activeItem === 'Cart'}
                 onClick={this.props.handleNavItemClick}
               />
             </Link>
@@ -64,11 +64,11 @@ class Nav extends React.Component {
             </Menu.Item>
           </Link>
           <Menu.Menu position='right'>
-            <Link to="/basket">
+            <Link to="/cart">
               <Menu.Item
                 className="menuItem"
-                name="Basket"
-                active={activeItem === 'Basket'}
+                name="Cart"
+                active={activeItem === 'Cart'}
                 onClick={this.props.handleNavItemClick}
               />
             </Link>

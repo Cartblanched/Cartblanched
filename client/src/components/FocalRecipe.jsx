@@ -4,9 +4,8 @@ import $ from 'jquery';
 import ErrorMessage from './Error.jsx';
 import SuccessMessage from './Success.jsx';
 import Ingredient from './Ingredient.jsx';
-import { Button } from 'semantic-ui-react';
+import { Button, Dimmer, Loader } from 'semantic-ui-react';
 import '../styles/app.css';
-import { Dimmer, Loader } from 'semantic-ui-react';
 
 class FocalRecipe extends React.Component {
   constructor(props) {
