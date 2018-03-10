@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
+import AdSense from 'react-adsense';
 import {
   BrowserRouter as Router,
   Route,
@@ -15,12 +16,11 @@ import FavoritesList from './FavoritesList.jsx';
 import SearchRecipe from './SearchRecipe.jsx';
 import FocalRecipe from './FocalRecipe.jsx';
 import RecipeEntry from './RecipeEntry.jsx';
-import SearchUser from './SearchUser.jsx';
+import BasketList from './BasketList.jsx';
 import Signup from './Signup.jsx';
 import Login from './Login.jsx';
 import Nav from './Nav.jsx';
 import '../styles/app.css';
-import BasketList from './BasketList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -45,8 +45,6 @@ class App extends React.Component {
     this.loginSubmit = this.loginSubmit.bind(this);
     this.onRecipeClick = this.onRecipeClick.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
-    this.onUserSearchClick = this.onUserSearchClick.bind(this);
-    this.onUserSearch = this.onUserSearch.bind(this);
     this.onRecipeSearch = this.onRecipeSearch.bind(this);
     this.onRecipeSearchClick = this.onRecipeSearchClick.bind(this);
     this.onIngredientCheck = this.onIngredientCheck.bind(this);
@@ -68,7 +66,11 @@ class App extends React.Component {
   }
 
   signupSubmit(signup) {
-    let obj = { email: `${signup.email}`, username: `${signup.username}`, password: `${signup.password}`};
+    let obj = {
+      email: `${signup.email}`,
+      username: `${signup.username}`,
+      password: `${signup.password}`
+    };
     $.ajax({
       type: 'POST',
       url: '/signup',
@@ -88,7 +90,10 @@ class App extends React.Component {
   }
 
   loginSubmit(login) {
-    let obj = { username: `${login.username}`, password: `${login.password}` };
+    let obj = {
+      username: `${login.username}`,
+      password: `${login.password}`
+    };
     $.ajax({
       type: 'POST',
       url: '/login',
@@ -113,7 +118,7 @@ class App extends React.Component {
   }
 
   onRecipeClick (recipe) {
-    var component = this;
+    let component = this;
     $.ajax({
       type: 'GET',
       url: '/recipe/' + recipe.id,
@@ -131,40 +136,11 @@ class App extends React.Component {
     });
   }
 
-  onIngredientCheck (id) {
+  onIngredientCheck(id) {
     this.state.focalRecipe.extendedIngredients.forEach((ingredient) => {
       if (ingredient.id === id) {
         ingredient.checked = !ingredient.checked;
       }
-    });
-  }
-
-  //search for username in database and pull all favorited recipes for that user
-  onUserSearchClick(e) {
-    e.preventDefault();
-    this.setState({
-      currentUser: this.state.userSearch + "'s",
-      favoriteError: false
-    });
-    let component = this;
-    $.ajax({
-      type: 'GET',
-      url: '/db/fetch',
-      data: 'username=' + component.state.userSearch,
-      success: function(favRecipesData) {
-        component.setState({
-          favoriteList: favRecipesData,
-        });
-      },
-      error: function(err) {
-        console.log(err);
-      }
-    });
-  }
-
-  onUserSearch(e) {
-    this.setState({
-      userSearch: e.target.value
     });
   }
 
@@ -174,11 +150,8 @@ class App extends React.Component {
     });
   }
 
-  //add get request for new recipes from server
   onRecipeSearchClick(e) {
-    //prevent the component from re-rendering when recipe search form is submitted
     e.preventDefault();
-    //if user enters multiple ingredients that are not comma delimited, make them comma delimited
     var searchIngredients;
     if (!this.state.recipeSearch.includes(',')) {
       searchIngredients = this.state.recipeSearch.split(' ').join(', ');
@@ -189,19 +162,18 @@ class App extends React.Component {
     $.ajax({
       type: 'GET',
       url: '/recipes?ingredients=' + searchIngredients,
-      success: function(recipesData) {
+      success: (recipesData) => {
         component.setState({
           recipeList: recipesData
         });
       },
-      error: function(err) {
+      error: (err) => {
         console.log(err);
       }
     });
   }
 
-  //post request to store favorite in database for user
-  addFavorite (recipe) {
+  addFavorite(recipe) {
     var component = this;
     if (component.state.userSearch === '') {
       component.setState({
@@ -224,7 +196,6 @@ class App extends React.Component {
           extendedIngredients: component.state.focalRecipe.extendedIngredients
         },
         success: (res) => {
-          //component.onUserSearchClick();
           component.setState({
             favoriteSuccess: true
           });
@@ -232,12 +203,12 @@ class App extends React.Component {
             type: 'GET',
             url: '/db/fetch',
             data: 'username=' + component.state.userSearch,
-            success: function(favRecipesData) {
+            success: (favRecipesData) => {
               component.setState({
                 favoriteList: favRecipesData,
               });
             },
-            error: function(err) {
+            error: (err) => {
               console.log(err);
             }
           });
@@ -299,10 +270,6 @@ class App extends React.Component {
         />
 
         <div className="ui container">
-          {/*<h1 class="ui aligned center header segment">
-            <img src="..dist/egg-icon.png"/>
-            Cartblanched
-          </h1>*/}
 
           <Route
             exact path="/signup"
@@ -357,10 +324,11 @@ class App extends React.Component {
                         onRecipeSearchClick={this.onRecipeSearchClick}
                         recipeSearch={this.state.recipeSearch}
                       />
-                      <SearchUser
-                        onUserSearchClick = {this.onUserSearchClick}
-                        userSearch = {this.state.userSearch}
-                        onUserSearch = {this.onUserSearch}
+                    </div>
+                    <div className="googleAd">
+                      <AdSense.Google
+                        client='ca-pub-7292810486004926'
+                        slot='7806394673'
                       />
                     </div>
                   </div>

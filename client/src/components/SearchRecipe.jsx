@@ -9,7 +9,7 @@ var SearchRecipe = (props) => {
     <div className="ui segment">
       <form className="ui form">
         <div className="field">
-          <div className="ui header small">Search Recipe</div>
+          <div className="ui header small">Search Recipes Starring</div>
           <input value={props.recipeSearch} name="search-recipe" type="text" onChange={props.onRecipeSearch}/>
         </div>
           <button
