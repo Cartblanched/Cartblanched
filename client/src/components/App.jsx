@@ -54,8 +54,10 @@ class App extends React.Component {
 
   componentDidMount() {
     if (cookie.load('loggedIn') === 'true' && this.state.loggedIn === false) {
+      let currentUser = cookie.load('username');
       this.setState({
-        loggedIn: true
+        loggedIn: true,
+        currentUser: currentUser
       });
     }
   }
