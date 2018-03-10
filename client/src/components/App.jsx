@@ -37,7 +37,8 @@ class App extends React.Component {
       favoriteSuccess: false,
       loggedIn: false,
       activeItem: 'Home',
-      basketLoading: false
+      basketLoading: false,
+      recipeLoading: false
     };
 
     this.handleNavItemClick = this.handleNavItemClick.bind(this);
@@ -114,6 +115,9 @@ class App extends React.Component {
 
   onRecipeClick (recipe) {
     var component = this;
+    component.setState({
+      recipeLoading: true
+    })
     $.ajax({
       type: 'GET',
       url: '/recipe/' + recipe.id,
@@ -122,7 +126,8 @@ class App extends React.Component {
           ingredient.checked = false;
         });
         component.setState({
-          focalRecipe: recipe
+          focalRecipe: recipe,
+          recipeLoading: false
         });
       },
       error: (err) => {
@@ -137,6 +142,10 @@ class App extends React.Component {
         ingredient.checked = !ingredient.checked;
       }
     });
+
+    this.setState({
+      focalRecipe: this.state.focalRecipe
+    });
   }
 
   //search for username in database and pull all favorited recipes for that user
@@ -149,7 +158,7 @@ class App extends React.Component {
     let component = this;
     $.ajax({
       type: 'GET',
-      url: '/db/fetch',
+      url: '/favorites',
       data: 'username=' + component.state.userSearch,
       success: function(favRecipesData) {
         component.setState({
@@ -214,7 +223,7 @@ class App extends React.Component {
       });
       $.ajax({
         method: 'POST',
-        url: '/db/save',
+        url: '/favorites',
         data: {
           username: component.state.userSearch,
           id: component.state.focalRecipe.id,
@@ -230,7 +239,7 @@ class App extends React.Component {
           });
           $.ajax({
             type: 'GET',
-            url: '/db/fetch',
+            url: '/favorites',
             data: 'username=' + component.state.userSearch,
             success: function(favRecipesData) {
               component.setState({
@@ -251,9 +260,6 @@ class App extends React.Component {
 
   createBasket() {
     const component = this;
-    component.setState({
-      basketLoading: true
-    });
     let ingredients = [];
     let aisles = [];
     this.state.focalRecipe.extendedIngredients.forEach((ingredient) => {
@@ -262,22 +268,27 @@ class App extends React.Component {
         aisles.push(ingredient.aisle);
       }
     });
-    ingredients = ingredients.join(',');
-    aisles = aisles.join('*');
-    $.ajax({
-      method: 'GET',
-      url: `/groceries?ingredients=${ingredients}&aisles=${aisles}`,
-      success: (data) => {
-        component.setState({
-          basketItems: data,
-          basketLoading: false
-        });
-        component.props.history.push('/basket');
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
+    if (ingredients.length > 0) {
+      component.setState({
+        basketLoading: true
+      });
+      ingredients = ingredients.join(',');
+      aisles = aisles.join('*');
+      $.ajax({
+        method: 'GET',
+        url: `/groceries?ingredients=${ingredients}&aisles=${aisles}`,
+        success: (data) => {
+          component.setState({
+            basketItems: data,
+            basketLoading: false
+          });
+          component.props.history.push('/basket');
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+    }
   }
 
   render() {
@@ -345,7 +356,8 @@ class App extends React.Component {
                           favoriteSuccess={this.state.favoriteSuccess}
                           handleCheck={this.onIngredientCheck}
                           handleBasket={this.createBasket}
-                          loading={this.state.basketLoading}
+                          basketLoading={this.state.basketLoading}
+                          recipeLoading={this.state.recipeLoading}
                         />
                       </div>
                     </div>
