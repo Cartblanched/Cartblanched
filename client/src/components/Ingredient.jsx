@@ -13,6 +13,7 @@ class Ingredient extends React.Component {
             this.props.handleCheck(this.props.ingredient.id);
           }}
           type="checkbox"
+          checked={this.props.ingredient.checked}
         />
         {this.props.ingredient.originalString}
       </ul>

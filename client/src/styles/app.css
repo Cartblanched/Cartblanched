@@ -19,6 +19,24 @@
   margin-top: 10px;
 }
 
-.hoverstyle:hover {
-  cursor: pointer !important;
+.basketHeader {
+  margin-top: 17px !important;
+  margin-bottom: 15px !important;
+}
+
+.textButton {
+  background-color: #88C057 !important;
+}
+
+.favoriteButton {
+  background-color: #F36B6B !important;
+  color: #FBEAE2 !important;
+}
+
+.basketButton {
+  background-color: #FBCB5C !important;
+}
+
+.inputStyle {
+  width: 50 !important;
 }

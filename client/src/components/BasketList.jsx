@@ -2,7 +2,7 @@ import React from 'react';
 import BasketItem from './BasketItem.jsx';
 
 const basketButton = {
-  backgroundColor: "#FBCB5C"
+  backgroundColor: "#FBCB5C",
 }
 
 class BasketList extends React.Component {
@@ -40,26 +40,27 @@ class BasketList extends React.Component {
         this.state.items.map((item, termIndex) => {
           if (item.items) {
             return (
-            <div className="ui segment topmargin">
-              <h3>Shopping for: {item.name}</h3>
-              <div className="ui five link cards">
-                {item.items.map((product, index) => {
-                  if (index < 5) {
-                    return (
-                      <BasketItem
-                        index={[termIndex, index]}
-                        item={product}
-                        handleClick={this.handleCartAdd}
-                      />
-                    )
-                  }
-                }
-              )}
+              <div>
+                <div className="ui segment">
+                  <h3>Shopping for: {item.name}</h3>
+                  <div className="ui five link cards">
+                    {item.items.map((product, index) => {
+                      if (index < 5) {
+                        return (
+                          <BasketItem
+                            index={[termIndex, index]}
+                            item={product}
+                            handleClick={this.handleCartAdd}
+                          />
+                        )
+                      }
+                    }
+                  )}
+                  </div>
+                </div>
               </div>
-            </div>
             )
-          }
-          else {
+          } else {
             return (
               <div className="ui segment topmargin">
                 <h3>No results found for: '{item.name}'</h3>
@@ -69,8 +70,24 @@ class BasketList extends React.Component {
         })
       )
     }
+
     return (
       <div>
+        { this.state.items.length > 0 &&
+          <div className="ui grid">
+            <div className="ten wide column basketHeader">
+              <h2>In Your Basket</h2>
+            </div>
+            <div className="six wide column topmargin">
+              <button
+                className="ui right floated button"
+                style={basketButton}
+              >
+                Proceed to cart
+              </button>
+            </div>
+          </div>
+        }
         {basketComponent}
       </div>
     )

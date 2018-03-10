@@ -5,24 +5,8 @@ import ErrorMessage from './Error.jsx';
 import SuccessMessage from './Success.jsx';
 import Ingredient from './Ingredient.jsx';
 import { Button } from 'semantic-ui-react';
-
-
-const inputStyle = {
-  width: 50
-}
-
-const textButton = {
-  backgroundColor: "#88C057"
-}
-
-const favoriteButton = {
-  backgroundColor: "#F36B6B",
-  color: "#FBEAE2"
-}
-
-const basketButton = {
-  backgroundColor: "#FBCB5C"
-}
+import '../styles/app.css';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 class FocalRecipe extends React.Component {
   constructor(props) {
@@ -105,6 +89,9 @@ class FocalRecipe extends React.Component {
       <div>
 
       <div className="ui two column stackable grid">
+        <Dimmer active={this.props.recipeLoading} inverted>
+          <Loader />
+        </Dimmer>
         <div className="10 wide column">
           <h3>{this.props.focalRecipe.title}</h3>
           <div>
@@ -133,18 +120,18 @@ class FocalRecipe extends React.Component {
           <div className="ui header small">Text Ingredients</div>
           <div className="inline fields">
               <div className="five wide field">
-                <div className="ui mini input">
-                  <input style={inputStyle} value={this.state.areaCode} onChange={this.onAreaCodeEntry} type="text" placeholder="(xxx)" />
+                <div className="ui mini input inputStyle">
+                  <input value={this.state.areaCode} onChange={this.onAreaCodeEntry} type="text" placeholder="(xxx)" />
                 </div>
               </div>
               <div className="five wide field">
-                <div className="ui mini input">
-                  <input style={inputStyle} value={this.state.prefix} onChange={this.onPrefixEntry} type="text" placeholder="xxx" />
+                <div className="ui mini input inputStyle">
+                  <input value={this.state.prefix} onChange={this.onPrefixEntry} type="text" placeholder="xxx" />
                 </div>
               </div>
               <div className="six wide field">
-                <div className="ui mini input">
-                  <input style={inputStyle} value={this.state.lineNum} onChange={this.onLineNumEntry} type="text" placeholder="xxxx" />
+                <div className="ui mini input inputStyle">
+                  <input value={this.state.lineNum} onChange={this.onLineNumEntry} type="text" placeholder="xxxx" />
                 </div>
               </div>
           </div>
@@ -175,25 +162,22 @@ class FocalRecipe extends React.Component {
         }
         <div className="three ui buttons">
           <button
-            style={textButton}
-            className="ui button"
+            className="ui button textButton"
             onClick={this.sendNumber}
           >
               Send Text
           </button>
           <button
-            style={favoriteButton}
-            className="ui button"
+            className="favoriteButton ui button"
             onClick={this.props.addFavorite}
           >
             <i className="heart icon"></i>
             Favorite
           </button>
           <Button
-            className="ui button right floated"
-            style={basketButton}
+            className="ui button right floated basketButton"
             onClick={this.props.handleBasket}
-            loading={this.props.loading}
+            loading={this.props.basketLoading}
           >
             Create Basket
           </Button>
