@@ -47,7 +47,7 @@ var SearchRecipe = (props) => {
   return (
     <div className="ui segment">
       <div className="seasonlist">
-        <h5 className="seasontoday">In Season Today:  {renderToday()}</h5>
+        <h5 className="seasontoday">Eat the Seasons:  <span>{renderToday()}</span></h5>
         {renderSeason()}
       </div>
 
