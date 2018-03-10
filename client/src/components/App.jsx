@@ -58,6 +58,8 @@ class App extends React.Component {
         loggedIn: true
       });
     }
+    //'invoke parent utility function to run all utitlity fns'
+    console.log('😍');
   }
 
   handleNavItemClick(e, { name }) {

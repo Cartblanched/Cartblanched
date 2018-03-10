@@ -18,9 +18,9 @@ var request = supertest.agent(server);
 // });
 
 
-describe('Server', function () {
-  it('/signup should add a new user to the database', function () {
-    let result = serve.METHODNAMEGOESHERE
-    assert.equal(result, 'put the expected result here')
-  })
-})
+// describe('Server', function () {
+//   it('/favorites', function () {
+//     let result = serve.METHODNAMEGOESHERE
+//     assert.equal(result, 'put the expected result here')
+//   })
+// })
