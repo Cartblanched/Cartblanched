@@ -61,6 +61,7 @@ app.post('/login', (req, res) => {
   });
 });
 
+
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.clearCookie('loggedIn');
