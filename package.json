@@ -33,6 +33,7 @@
     "mongoose": "^5.0.6",
     "path": "^0.12.7",
     "react": "^16.2.0",
+    "react-adsense": "0.0.4",
     "react-cookie": "^1.0.5",
     "react-dom": "^16.2.0",
     "react-popup": "^0.9.2",

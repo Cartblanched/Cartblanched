@@ -31,7 +31,7 @@ class BasketList extends React.Component {
     let basketComponent = null;
     if (this.state.items.length === 0) {
       basketComponent = (
-        <div className="ui segment">
+        <div className="ui segment topmargin">
           <h3>Your basket is currently empty! Search for recipes and create a basket!</h3>
         </div>
       )
@@ -61,7 +61,7 @@ class BasketList extends React.Component {
           }
           else {
             return (
-              <div className="ui segment">
+              <div className="ui segment topmargin">
                 <h3>No results found for: '{item.name}'</h3>
               </div>
             )

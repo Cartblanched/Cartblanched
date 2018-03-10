@@ -24,12 +24,13 @@ class Nav extends React.Component {
             </Menu.Item>
           </Link>
           <Link to="/favorites">
-          <Menu.Item
-            className="menuItem"
-            name="Favorites"
-            active={activeItem === 'Favorites'}
-            onClick={this.props.handleNavItemClick}
-          />
+            <Menu.Item
+              name="Favorites"
+              active={activeItem === 'Favorites'}
+              onClick={this.props.handleNavItemClick}
+            >
+            <Image src='https://c1.staticflickr.com/5/4781/40676509612_48ba3256be_s.jpg' avatar />
+            </Menu.Item>
           </Link>
           <Menu.Menu position='right'>
             <Link to="/basket">
