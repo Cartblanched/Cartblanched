@@ -28,7 +28,7 @@ class BasketList extends React.Component {
       <div>
         {this.state.items.map((item, termIndex) => {
           return (
-          <div className="ui segment">
+          <div className="ui segment topmargin">
             <h3>{item.name}</h3>
             <div className="ui five link cards">
               {item.items.map((product, index) =>
