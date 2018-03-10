@@ -32,10 +32,12 @@ class App extends React.Component {
       focalRecipe: sampleRecipe,
       userSearch: '',
       recipeSearch: '',
+      basketItems: [],
       favoriteError: false,
       favoriteSuccess: false,
       loggedIn: false,
-      activeItem: 'Home'
+      activeItem: 'Home',
+      basketLoading: false
     };
 
     this.handleNavItemClick = this.handleNavItemClick.bind(this);
@@ -48,6 +50,7 @@ class App extends React.Component {
     this.onRecipeSearch = this.onRecipeSearch.bind(this);
     this.onRecipeSearchClick = this.onRecipeSearchClick.bind(this);
     this.onIngredientCheck = this.onIngredientCheck.bind(this);
+    this.createBasket = this.createBasket.bind(this);
   }
 
   componentDidMount() {
@@ -246,6 +249,37 @@ class App extends React.Component {
     }
   }
 
+  createBasket() {
+    const component = this;
+    component.setState({
+      basketLoading: true
+    });
+    let ingredients = [];
+    let aisles = [];
+    this.state.focalRecipe.extendedIngredients.forEach((ingredient) => {
+      if (ingredient.checked) {
+        ingredients.push(ingredient.name);
+        aisles.push(ingredient.aisle);
+      }
+    });
+    ingredients = ingredients.join(',');
+    aisles = aisles.join('*');
+    $.ajax({
+      method: 'GET',
+      url: `/groceries?ingredients=${ingredients}&aisles=${aisles}`,
+      success: (data) => {
+        component.setState({
+          basketItems: data,
+          basketLoading: false
+        });
+        component.props.history.push('/basket');
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
   render() {
     return (
       <div>
@@ -290,7 +324,9 @@ class App extends React.Component {
 
           <Route
             exact path='/basket'
-            component={BasketList}
+            render={ () =>
+              <BasketList items={this.state.basketItems} />
+            }
           />
 
           <Route
@@ -308,6 +344,8 @@ class App extends React.Component {
                           favoriteError={this.state.favoriteError}
                           favoriteSuccess={this.state.favoriteSuccess}
                           handleCheck={this.onIngredientCheck}
+                          handleBasket={this.createBasket}
+                          loading={this.state.basketLoading}
                         />
                       </div>
                     </div>

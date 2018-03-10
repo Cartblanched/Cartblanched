@@ -126,10 +126,17 @@ app.post('/sendText', bodyParser.json(), (req, res) => {
 });
 
 app.get('/groceries', (req, res) => {
-  var terms = req.body.searchTerms;
-  walmartHelpers.getProducts(terms, function (results) {
-    res.status(200).send(groceries)
+  const terms = req.query.ingredients.split(',');
+  // split by '*' because sometimes the aisle will contain characters like ',' or '&', etc.
+  const aisles = req.query.aisles.split('*');
+  // Sometimes spoonacular aisles will have multiple aisles separated by ';'. Walmart API only
+  // takes in one categoryId though, so we'll just keep the first aisle
+  aisles.forEach(function(aisle, index) {
+    aisles[index] = aisle.split(';')[0]
   });
+  walmartHelpers.getProducts(terms, aisles, (results) => {
+    res.status(200).send(results);
+  })
 });
 
 app.get('/*', (req, res) => {

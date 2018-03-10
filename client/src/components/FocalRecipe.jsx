@@ -4,6 +4,7 @@ import $ from 'jquery';
 import ErrorMessage from './Error.jsx';
 import SuccessMessage from './Success.jsx';
 import Ingredient from './Ingredient.jsx';
+import { Button } from 'semantic-ui-react';
 
 
 const inputStyle = {
@@ -17,6 +18,10 @@ const textButton = {
 const favoriteButton = {
   backgroundColor: "#F36B6B",
   color: "#FBEAE2"
+}
+
+const basketButton = {
+  backgroundColor: "#FBCB5C"
 }
 
 class FocalRecipe extends React.Component {
@@ -119,8 +124,8 @@ class FocalRecipe extends React.Component {
             {this.props.focalRecipe.extendedIngredients.map((ingredient) =>
               <Ingredient handleCheck={this.props.handleCheck} ingredient={ingredient} />
             )}
-        </div>
           </div>
+        </div>
 
       </div>
 
@@ -168,20 +173,30 @@ class FocalRecipe extends React.Component {
               message = {"Added to Favorites!"}
             /> : null
         }
-        <div className="two ui buttons">
+        <div className="three ui buttons">
           <button
-              style = {textButton}
-              className="ui button"
-              onClick={this.sendNumber}>
+            style={textButton}
+            className="ui button"
+            onClick={this.sendNumber}
+          >
               Send Text
           </button>
           <button
-              style = {favoriteButton}
-              className="ui button"
-              onClick={this.props.addFavorite}>
-              <i className="heart icon"></i>
-              Favorite
+            style={favoriteButton}
+            className="ui button"
+            onClick={this.props.addFavorite}
+          >
+            <i className="heart icon"></i>
+            Favorite
           </button>
+          <Button
+            className="ui button right floated"
+            style={basketButton}
+            onClick={this.props.handleBasket}
+            loading={this.props.loading}
+          >
+            Create Basket
+          </Button>
         </div>
       </div>
     );
