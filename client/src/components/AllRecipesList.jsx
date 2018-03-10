@@ -1,5 +1,6 @@
 import React from 'react';
 import RecipeEntry from './RecipeEntry.jsx';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 var AllRecipesList = (props) => {
   if (props.recipeList.length === 0) {
@@ -12,6 +13,9 @@ var AllRecipesList = (props) => {
   } else {
     return (
       <div className="ui segment">
+        <Dimmer active={props.searchLoading} inverted>
+          <Loader />
+        </Dimmer>
         <h3>All Recipes </h3>
 
         <div className="ui five link cards">
