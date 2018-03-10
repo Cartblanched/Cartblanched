@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Segment } from 'semantic-ui-react';
+import { Menu, Segment, Image } from 'semantic-ui-react';
 
 class Nav extends React.Component {
   constructor(props) {
@@ -16,14 +16,17 @@ class Nav extends React.Component {
         <Menu pointing secondary>
           <Link to="/">
             <Menu.Item
-              name='Home'
+              name="Home"
               active={activeItem === 'Home'}
               onClick={this.props.handleNavItemClick}
-            />
+            >
+              <Image src='https://c1.staticflickr.com/5/4793/38906403910_2e18fe17c6_s.jpg' avatar />
+            </Menu.Item>
           </Link>
           <Link to="/favorites">
           <Menu.Item
-            name='Favorites'
+            className="menuItem"
+            name="Favorites"
             active={activeItem === 'Favorites'}
             onClick={this.props.handleNavItemClick}
           />
@@ -31,13 +34,15 @@ class Nav extends React.Component {
           <Menu.Menu position='right'>
             <Link to="/basket">
               <Menu.Item
-                name='Basket'
+                className="menuItem"
+                name="Basket"
                 active={activeItem === 'Basket'}
                 onClick={this.props.handleNavItemClick}
               />
             </Link>
             <Menu.Item
-              name='Logout'
+              className="menuItem"
+              name="Logout"
               active={activeItem === 'Logout'}
               onClick={this.props.handleNavItemClick}
               href="/logout"
@@ -50,29 +55,34 @@ class Nav extends React.Component {
         <Menu pointing secondary>
           <Link to="/">
             <Menu.Item
-              name='Home'
+              name="Home"
               active={activeItem === 'Home'}
               onClick={this.props.handleNavItemClick}
-            />
+            >
+              <Image src='https://c1.staticflickr.com/5/4793/38906403910_2e18fe17c6_s.jpg' avatar />
+            </Menu.Item>
           </Link>
           <Menu.Menu position='right'>
             <Link to="/basket">
               <Menu.Item
-                name='Basket'
+                className="menuItem"
+                name="Basket"
                 active={activeItem === 'Basket'}
                 onClick={this.props.handleNavItemClick}
               />
             </Link>
             <Link to="/login">
               <Menu.Item
-                name='Login'
+                className="menuItem"
+                name="Login"
                 active={activeItem === 'Login'}
                 onClick={this.props.handleNavItemClick}
               />
             </Link>
             <Link to="/signup">
               <Menu.Item
-                name='Signup'
+                className="menuItem"
+                name="Signup"
                 active={activeItem === 'Signup'}
                 onClick={this.props.handleNavItemClick}
               />

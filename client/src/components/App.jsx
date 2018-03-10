@@ -296,11 +296,11 @@ class App extends React.Component {
           <Route
             exact path="/"
             render={ () =>
-              <div>
+              <div className="topmargin">
                 <div className="ui two column stackable grid">
                   <div className="ten wide column">
                     <div className="ui segment">
-                      <div >
+                      <div>
                         <FocalRecipe
                           focalRecipe={this.state.focalRecipe}
                           recipeList={this.state.recipeList}

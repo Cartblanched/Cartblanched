@@ -5,14 +5,14 @@ import RecipeEntry from './RecipeEntry.jsx';
 var FavoritesList = (props) => {
   if (props.favoriteList.length === 0) {
     return (
-      <div className="ui segment">
+      <div className="ui segment topmargin">
         <h3>{props.currentUser} Favorites </h3>
         <div>No favorites yet.</div>
       </div>
     )
   } else {
     return (
-      <div className="ui segment">
+      <div className="ui segment topmargin">
         <h3>{props.currentUser} Favorites </h3>
 
         <div className="ui five link cards">
