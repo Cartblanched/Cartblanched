@@ -6,6 +6,15 @@
   margin-top: 15px !important;
 }
 
+.seasontoday {
+  margin-bottom: 20px;
+}
+
+.seasonlist {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .googleAd {
   margin-top: 10px;
 }
