@@ -22,6 +22,7 @@ import Login from './Login.jsx';
 import Nav from './Nav.jsx';
 import '../styles/app.css';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -58,8 +59,6 @@ class App extends React.Component {
         loggedIn: true
       });
     }
-    //'invoke parent utility function to run all utitlity fns'
-    console.log('😍');
   }
 
   handleNavItemClick(e, { name }) {
