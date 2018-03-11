@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node server/test/serverTest.js",
+    "test": "node server/test/serverSpec.js",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon --inspect server/index.js"
   },
