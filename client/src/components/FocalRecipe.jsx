@@ -112,7 +112,6 @@ class FocalRecipe extends React.Component {
             )}
           </div>
         </div>
-
       </div>
       <div className="textingredients">
         <form className="ui form">

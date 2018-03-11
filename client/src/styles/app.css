@@ -29,6 +29,10 @@
   margin-bottom: 15px !important;
 }
 
+.checkbox {
+  margin-right: 5px;
+}
+
 .textButton {
   background-color: #88C057 !important;
 }
@@ -49,3 +53,10 @@
 .inputStyle {
   width: 50 !important;
 }
+
+.allrecipes {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
