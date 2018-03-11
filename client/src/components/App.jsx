@@ -23,6 +23,7 @@ import Nav from './Nav.jsx';
 import '../styles/app.css';
 import CartList from './CartList.jsx';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);

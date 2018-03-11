@@ -16,7 +16,9 @@ var getRecipesByIngredients = function(ingredients) {
 //Spoonacular API request thta returns a specific recipe based on recipe ID
 var getRecipeByRecipeID = function(recipeID) {
   return axios.get(`https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${recipeID}/information?includeNutrition=false`, {
-    headers: {'X-Mashape-Key': process.env.X_MASHAPE_KEY}
+    headers: {
+      'X-Mashape-Key': process.env.X_MASHAPE_KEY
+    }
   });
 };
 
