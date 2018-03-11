@@ -9,10 +9,11 @@ class Ingredient extends React.Component {
     return (
       <ul>
         <input
+          type="checkbox"
+          className="checkbox"
           onClick={() => {
             this.props.handleCheck(this.props.ingredient.id);
           }}
-          type="checkbox"
           checked={this.props.ingredient.checked}
         />
         {this.props.ingredient.originalString}

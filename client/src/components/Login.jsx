@@ -8,14 +8,11 @@ class Login extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      warn: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  validateForm() {
-    return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   handleChange(event) {
@@ -24,12 +21,33 @@ class Login extends React.Component {
     });
   }
 
+  validateForm() {
+    return this.state.username.length > 0 && this.state.password.length > 0;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    this.props.loginSubmit(this.state);
+    let bool = this.validateForm();
+    if (bool) {
+      this.props.signupSubmit(this.state);
+    } else {
+      this.setState({
+        warn: true
+      })
+    }
   }
 
   render() {
+    let Warning = null;
+    if (this.state.warn) {
+      Warning = (
+        <Message warning>
+          <Message.Header>Whoa there!</Message.Header>
+          <p>Please enter valid credentials.</p>
+        </Message>
+      )
+    }
+
     return (
       <div>
         <div className="login-background">
@@ -71,6 +89,7 @@ class Login extends React.Component {
                   </Button>
                 </Segment>
               </Form>
+              {Warning}
               <Message>
                 New here? <Link to="/signup"> Sign Up</Link>
               </Message>

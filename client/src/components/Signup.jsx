@@ -9,14 +9,11 @@ class Signup extends React.Component {
     this.state = {
       email: '',
       username: '',
-      password: ''
+      password: '',
+      warn: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  validateForm() {
-    return this.state.email.length > 0 && this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   handleChange(event) {
@@ -25,11 +22,32 @@ class Signup extends React.Component {
     });
   }
 
+  validateForm() {
+    return (this.state.email.length > 0 && this.state.username.length > 0 && this.state.password.length > 0);
+  }
+
   handleSubmit() {
-    this.props.signupSubmit(this.state);
+    let bool = this.validateForm();
+    if (bool) {
+      this.props.signupSubmit(this.state);
+    } else {
+      this.setState({
+        warn: true
+      })
+    }
   }
 
   render() {
+    let Warning = null;
+    if (this.state.warn) {
+      Warning = (
+        <Message warning>
+          <Message.Header>Whoa there!</Message.Header>
+          <p>Please enter valid credentials.</p>
+        </Message>
+      )
+    }
+
     return (
       <div className="signup-background">
         <Grid
@@ -80,6 +98,7 @@ class Signup extends React.Component {
                 </Button>
               </Segment>
             </Form>
+            {Warning}
             <Message>
               Already have an account? <Link to="/login"> Login</Link>
             </Message>
