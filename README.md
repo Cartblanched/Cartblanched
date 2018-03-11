@@ -1,6 +1,6 @@
 # Cartblanched
 
-> An web application that allows you to shop your favorite recipes, get grocery deliveries, and text ingredient lists to others.
+> Order groceries to your home based on the ingredient lists of your favorite recipes. Cartblanched will automatically popuate a shopping cart with the ingredients you need. Don't want to order online? Get your ingredient lists sent to you via or friends and family while at the grocery store.
 
 ## Developer Team
 
@@ -8,11 +8,7 @@
   - [Norbie Magno](https://github.com/Magnoes)
   - [Mike Butak](https://github.com/mikebutak)
 
-## Table of Contents
-
 ## Getting Started
-
-- App deployed on Heroku at https://foodmatrix.herokuapp.com/
 
 - Spoonacular API
   -Register for a [Spoonacular API key](https://rapidapi.com/user/spoonacular/package/Recipe%20-%20Food%20-%20Nutrition/pricing)
