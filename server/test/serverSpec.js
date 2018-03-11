@@ -89,5 +89,4 @@ const testSpoonacularGet = function () {
 // }
 
 runTests();
-
 // req.body = { email: '1', username: '2', password: '3' }
