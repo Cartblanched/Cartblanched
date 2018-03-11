@@ -49,38 +49,38 @@ class FocalRecipe extends React.Component {
         console.log(ingredient);
       }
     })
-    // var phoneNumber = '1' + this.state.areaCode + this.state.prefix + this.state.lineNum;
-    // if (phoneNumber.length !== 11) {
-    //   this.setState({
-    //     phoneError: true,
-    //     phoneSuccess: false
-    //   });
-    // } else {
-    //   this.setState({
-    //     phoneError: false
-    //   });
-    //   //Overly complex algorithm for creating ingredients string to send through text
-    //   var ingredientsMessage = 'Could you please make me ' + this.props.focalRecipe.title + '? ' + 'The ingredients needed are: ' + this.props.focalRecipe.extendedIngredients.reduce((ingredients, ingredient) => ingredients + ingredient.amount + ' ' + ingredient.unit + ' ' + ingredient.name + ', ', '');
-    //   ingredientsMessage = ingredientsMessage.slice(0, -2);
-    //   var component = this;
-    //   $.ajax({
-    //     method: 'POST',
-    //     url: '/sendText',
-    //     data: JSON.stringify({
-    //       number: phoneNumber,
-    //       ingredients: ingredientsMessage
-    //     }),
-    //     contentType: 'application/json',
-    //     success: (res) => {
-    //       component.setState({
-    //         phoneSuccess: true
-    //       })
-    //     },
-    //     error: (err) => {
-    //       console.log('phone number failed to send');
-    //     }
-    //   });
-    // }
+    var phoneNumber = '1' + this.state.areaCode + this.state.prefix + this.state.lineNum;
+    if (phoneNumber.length !== 11) {
+      this.setState({
+        phoneError: true,
+        phoneSuccess: false
+      });
+    } else {
+      this.setState({
+        phoneError: false
+      });
+      // Overly complex algorithm for creating ingredients string to send through text
+      var ingredientsMessage = 'Could you please make me ' + this.props.focalRecipe.title + '? ' + 'The ingredients needed are: ' + this.props.focalRecipe.extendedIngredients.reduce((ingredients, ingredient) => ingredients + ingredient.amount + ' ' + ingredient.unit + ' ' + ingredient.name + ', ', '');
+      ingredientsMessage = ingredientsMessage.slice(0, -2);
+      var component = this;
+      $.ajax({
+        method: 'POST',
+        url: '/sendText',
+        data: JSON.stringify({
+          number: phoneNumber,
+          ingredients: ingredientsMessage
+        }),
+        contentType: 'application/json',
+        success: (res) => {
+          component.setState({
+            phoneSuccess: true
+          })
+        },
+        error: (err) => {
+          console.log('phone number failed to send');
+        }
+      });
+    }
   }
 
   render() {
@@ -114,13 +114,13 @@ class FocalRecipe extends React.Component {
         </div>
 
       </div>
-
+      <div className="textingredients">
         <form className="ui form">
           <div className="ui header small">Text Ingredients</div>
           <div className="inline fields">
               <div className="five wide field">
                 <div className="ui mini input inputStyle">
-                  <input value={this.state.areaCode} onChange={this.onAreaCodeEntry} type="text" placeholder="(xxx)" />
+                  <input value={this.state.areaCode} onChange={this.onAreaCodeEntry} type="text" placeholder="xxx" />
                 </div>
               </div>
               <div className="five wide field">
@@ -135,6 +135,7 @@ class FocalRecipe extends React.Component {
               </div>
           </div>
         </form>
+      </div>
         {
           this.state.phoneError ?
             <ErrorMessage

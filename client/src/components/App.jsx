@@ -2,7 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
-import AdSense from 'react-adsense';
 import {
   BrowserRouter as Router,
   Route,
@@ -19,6 +18,7 @@ import RecipeEntry from './RecipeEntry.jsx';
 import BasketList from './BasketList.jsx';
 import Signup from './Signup.jsx';
 import Login from './Login.jsx';
+import GoogleAd from './Ad.jsx';
 import Nav from './Nav.jsx';
 import '../styles/app.css';
 import CartList from './CartList.jsx';
@@ -387,10 +387,7 @@ class App extends React.Component {
                       />
                     </div>
                     <div className="googleAd">
-                      <AdSense.Google
-                        client='ca-pub-7292810486004926'
-                        slot='7806394673'
-                      />
+                      <GoogleAd />
                     </div>
                   </div>
                 </div>

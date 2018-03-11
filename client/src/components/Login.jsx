@@ -39,7 +39,7 @@ class Login extends React.Component {
             style={{ height: '100%' }}
           >
             <Grid.Column style={{ maxWidth: 450 }}>
-              <Header as="h2" color="teal" textAlign="center">
+              <Header as="h2" color="black" textAlign="center">
                 Login to Your Account
               </Header>
               <Form size="large">
@@ -63,7 +63,7 @@ class Login extends React.Component {
                     onChange={this.handleChange}
                   />
                   <Button
-                    color="teal"
+                    color="black"
                     fluid size="large"
                     onClick={this.handleSubmit}
                   >
