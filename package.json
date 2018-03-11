@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha || true",
+    "test": "node server/test/serverSpec.js",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js"
   },
@@ -39,7 +39,6 @@
     "react-popup": "^0.9.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "semantic-ui-css": "^2.3.0",
     "semantic-ui-react": "^0.78.3",
@@ -55,6 +54,7 @@
     "css-loader": "^0.28.10",
     "file-loader": "^1.1.11",
     "mocha": "^5.0.4",
+    "request": "^2.83.0",
     "style-loader": "^0.20.2",
     "supertest": "^3.0.0",
     "url-loader": "^1.0.1",

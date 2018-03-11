@@ -35,7 +35,7 @@ app.post('/signup', (req, res) => {
       };
       db.saveUser(newUser)
         .then((newUser) => {
-          res.status(200).send();
+          res.status(200).send(`Successfully stored a new user: ${newUser}`);
           console.log(`Successfully stored a new user: ${newUser}`);
         })
     })
