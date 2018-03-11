@@ -12,6 +12,17 @@ class CartList extends React.Component {
     this.handleQuanityChange = this.handleQuanityChange.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
+    this.calculateTotalCost = this.calculateTotalCost.bind(this);
+  }
+
+  calculateTotalCost() {
+    let totalCost = 0;
+    this.state.cartItems.forEach((item) => {
+      if (item.quantity) {
+        totalCost += item.quantity * item.salePrice;
+      }
+    });
+    return totalCost.toFixed(2);
   }
 
   handleAddToCart() {
@@ -33,24 +44,23 @@ class CartList extends React.Component {
 
   handleRemoveFromCart(index) {
     this.state.cartItems.splice(index, 1);
+    let cost = this.calculateTotalCost();
     this.setState({
-      cartItems: this.state.cartItems
+      cartItems: this.state.cartItems,
+      total: cost
     });
   }
 
   handleQuanityChange(id, value) {
-    let totalCost = 0;
     this.state.cartItems.forEach((item) => {
       if (item.itemId === id) {
         item.quantity = value;
       }
-      if (item.quantity) {
-        totalCost += item.quantity * item.salePrice;
-      }
     });
+    let cost = this.calculateTotalCost();
     this.setState({
       cartItems: this.state.cartItems,
-      total: totalCost.toFixed(2)
+      total: cost
     });
   }
 
@@ -79,21 +89,21 @@ class CartList extends React.Component {
           }
           </Item.Group>
         </div>
-        <div className="ui grid">
-          <div className="eleven wide column">
-          </div>
-          <div className="five wide column">
-            <div className="ui left action input">
-              <button
-                className="ui teal labeled icon button cartButton"
-                onClick={this.handleAddToCart}
-              >
-                <i className="cart icon"></i>
-                Checkout
-              </button>
-              <input className="right floated" type="text" value={`$${this.state.total}`} readOnly />
+        <div className="ui stackable grid">
+
+            <div className="right floated right aligned column">
+              <div className="ui left action input">
+                <button
+                  className="ui labeled icon button basketButton"
+                  onClick={this.handleAddToCart}
+                >
+                  <i className="cart icon"></i>
+                  Checkout
+                </button>
+                <input type="text" value={`$${this.state.total}`} readOnly />
+              </div>
             </div>
-          </div>
+
         </div>
       </div>
       )

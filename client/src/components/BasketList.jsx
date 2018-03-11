@@ -33,7 +33,7 @@ class BasketList extends React.Component {
             <div>
               <div className="ui segment">
                 <h3>Shopping for: {item.name}</h3>
-                <div className="ui five link cards">
+                <div className="ui five stackable link cards">
                   {item.items.map((product, index) => {
                     if (index < 5) {
                       return (
