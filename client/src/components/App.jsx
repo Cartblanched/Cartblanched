@@ -109,7 +109,8 @@ class App extends React.Component {
         if (jqXHR.status === 200) {
           this.setState({
             loggedIn: true,
-            activeItem: 'Home'
+            activeItem: 'Home',
+            currentUser: obj.username
           });
           this.props.history.push(`/`);
         }

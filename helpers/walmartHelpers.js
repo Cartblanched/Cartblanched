@@ -51,11 +51,13 @@ const getProducts = (terms, aisles, cb) => {
       for (var i = 0; i < data.length; i++) {
         let itemString = data[i].data.query.replace(/'/g, "");
         itemString = itemString[0].toUpperCase() + itemString.substring(1);
-        data[i].data.items.forEach((item) => {
-          if (!item.salePrice) {
-            item.salePrice = 0;
-          }
-        });
+        if (data[i].data.items) {
+          data[i].data.items.forEach((item) => {
+            if (!item.salePrice) {
+              item.salePrice = 0;
+            }
+          });
+        }
         parsedData.push({
           name: itemString,
           items: data[i].data.items
