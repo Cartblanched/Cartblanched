@@ -19,6 +19,11 @@
   margin-top: 15px;
 }
 
+.adslot_1 {
+  width: 234px;
+  height: 60px;
+}
+
 .basketHeader {
   margin-top: 17px !important;
   margin-bottom: 15px !important;
@@ -26,6 +31,10 @@
 
 .textButton {
   background-color: #88C057 !important;
+}
+
+.textingredients {
+  margin-top: 15px;
 }
 
 .favoriteButton {

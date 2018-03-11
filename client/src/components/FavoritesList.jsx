@@ -1,7 +1,6 @@
 import React from 'react';
 import RecipeEntry from './RecipeEntry.jsx';
 
-//add random favorites default
 var FavoritesList = (props) => {
   if (props.favoriteList.length === 0) {
     return (

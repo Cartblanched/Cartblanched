@@ -49,18 +49,3 @@ var AllRecipesList = (props) => {
 }
 
 export default AllRecipesList;
-
-
-
-
-
-// <div class="ui grid">
-//         {console.log(props.recipeList)}
-//           {props.recipeList.map((recipe) =>
-//             <div class="four wide column">
-//               <RecipeEntry recipe={recipe}
-//               onRecipeClick = {props.onRecipeClick}
-//               />
-//             </div>
-//           )}
-//       </div>

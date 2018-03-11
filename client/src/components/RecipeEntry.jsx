@@ -2,7 +2,6 @@ import React from 'react';
 
 
 var RecipeEntry = (props) => {
-  //Creating a conditional here to avoid trying to map an undefined object as a list entry
   if (props.recipe !== undefined) {
   return (
       <div>
