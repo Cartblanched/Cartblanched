@@ -26,10 +26,10 @@ class Login extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
     let bool = this.validateForm();
     if (bool) {
-      this.props.signupSubmit(this.state);
+      event.preventDefault();
+      this.props.loginSubmit(this.state);
     } else {
       this.setState({
         warn: true
