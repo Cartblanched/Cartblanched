@@ -20,7 +20,7 @@ class DragDrop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: this.props.favoriteImages
+      items: this.props.favoriteList
     }
     this.onSortEnd = this.onSortEnd.bind(this);
   }
