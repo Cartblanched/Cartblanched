@@ -3,6 +3,7 @@ const axios = require('axios');
 const $ = require('jquery');
 const request = require('request');
 require('dotenv').config();
+
 const runTests = function () {
   testSpoonacularGet();
   // testSignupBlankForm();
@@ -56,8 +57,15 @@ const testSpoonacularGet = function () {
 //       let errData = JSON.parse(err.config.data);
 //       console.log(errData, '<-- that is an err from axios test of signup endpoint');
 //     })
+<<<<<<< HEAD
 // }
 
+=======
+
+// }
+
+
+>>>>>>> fe4c941fa5b3c1337a880b96154370d95d92b69b
 // ATTEMPT 2 TO TEST /signup
 // const testSignupBlankForm = function () {
 //     let obj = {
@@ -78,6 +86,10 @@ const testSpoonacularGet = function () {
 //       }
 //     });
 //   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> fe4c941fa5b3c1337a880b96154370d95d92b69b
 // ATTEMPT 3 TO TEST /signup
 // const testSignupBlankForm = function () {
 //   request.post('http://127.0.0.1:3000/signup', {form:{username: '', email: '', password: ''}})
@@ -88,5 +100,10 @@ const testSpoonacularGet = function () {
 //   })
 // }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> fe4c941fa5b3c1337a880b96154370d95d92b69b
 runTests();
 // req.body = { email: '1', username: '2', password: '3' }
