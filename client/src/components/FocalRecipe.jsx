@@ -4,7 +4,7 @@ import $ from 'jquery';
 import ErrorMessage from './Error.jsx';
 import SuccessMessage from './Success.jsx';
 import Ingredient from './Ingredient.jsx';
-import { Button, Dimmer, Loader, Popup } from 'semantic-ui-react';
+import { Button, Dimmer, Loader, Popup, Image } from 'semantic-ui-react';
 import '../styles/app.css';
 
 class FocalRecipe extends React.Component {
@@ -17,7 +17,8 @@ class FocalRecipe extends React.Component {
       phoneSuccess: false,
       favePopup: false,
       textPopup: false,
-      textIngredients: false
+      textIngredients: false,
+      active: false
     };
     this.sendNumber = this.sendNumber.bind(this);
     this.onAreaCodeEntry = this.onAreaCodeEntry.bind(this);
@@ -28,8 +29,16 @@ class FocalRecipe extends React.Component {
     this.handleFaveClose = this.handleFaveClose.bind(this);
     this.handleTextOpen = this.handleTextOpen.bind(this);
     this.handleTextClose = this.handleTextClose.bind(this);
+    this.showRecipe = this.showRecipe.bind(this);
+    this.hideRecipe = this.hideRecipe.bind(this);
   }
 
+  showRecipe() {
+    this.setState({ active: true })
+  }
+  hideRecipe() {
+    this.setState({ active: false })
+  }
 
   handleFaveOpen() {
     this.setState({ favePopup: true});
@@ -141,6 +150,14 @@ class FocalRecipe extends React.Component {
     } else {
       textContent = this.state.phoneSuccess ? "Text Sent!" : "Invalid Phone Number";
     }
+
+    const { active } = this.state;
+    const content = (
+      <a href={this.props.focalRecipe.sourceUrl} target="_blank">
+       <div className="ui button recipeButton">View Full Recipe</div>
+      </a>
+    );
+
     return (
       <div>
       <div className="ui two column stackable grid">
@@ -149,22 +166,16 @@ class FocalRecipe extends React.Component {
         </Dimmer>
         <div className="10 wide column">
           <h3>{this.props.focalRecipe.title}</h3>
-          <div className="ui focalimage">
-              <div className="dimmable image">
-                <div className="ui dimmer">
-                  <div className="content">
-                    <div className="center">
-                      <a href={this.props.focalRecipe.sourceUrl} target="_blank">
-                        <div className="ui button">View Full Recipe</div>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <img
-                  className="ui centered rounded image" src={this.props.focalRecipe.image}
-                />
-              </div>
-          </div>
+            <Dimmer.Dimmable
+              as={Image}
+              dimmed={active}
+              dimmer={{ active, content }}
+              onMouseEnter={this.showRecipe}
+              onMouseLeave={this.hideRecipe}
+              className="rounded image"
+              src={this.props.focalRecipe.image}
+            />
+
         </div>
         <div className="6 wide column">
           <div className="content">
