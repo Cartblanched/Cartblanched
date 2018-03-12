@@ -16,6 +16,7 @@ import SearchRecipe from './SearchRecipe.jsx';
 import FocalRecipe from './FocalRecipe.jsx';
 import RecipeEntry from './RecipeEntry.jsx';
 import BasketList from './BasketList.jsx';
+import DragDrop from './DragDrop.jsx';
 import Signup from './Signup.jsx';
 import Login from './Login.jsx';
 import GoogleAd from './Ad.jsx';
@@ -356,12 +357,18 @@ class App extends React.Component {
           <Route
             exact path="/faves"
             render={ () =>
-              <FavoritesList
-                favoriteList={this.state.favoriteList}
-                onRecipeClick={this.onRecipeClick}
-                unFavorite={this.unFavorite}
-                currentUser={this.state.currentUser}
-              />
+              <div>
+                <FavoritesList
+                  favoriteList={this.state.favoriteList}
+                  onRecipeClick={this.onRecipeClick}
+                  unFavorite={this.unFavorite}
+                  currentUser={this.state.currentUser}
+                />
+                <DragDrop favoriteImages={this.state.favoriteList.map((recipe, index) => {
+                  return <img className="dragdrop" src={recipe.image} />
+                })}
+                />
+              </div>
             }
           />
 

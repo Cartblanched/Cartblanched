@@ -59,4 +59,21 @@
   margin-bottom: 20px;
 }
 
+.dragdrop {
+  width: 119px;
+  height: 119px;
+  object-fit: cover;
+  margin: 5px;
+  border-radius: 500%;
+}
+
+.daylabel {
+  text-align: center !important;
+}
+
+.day {
+  width: 80px !important;
+}
+
+
 
