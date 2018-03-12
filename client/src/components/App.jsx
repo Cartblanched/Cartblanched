@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
-import { withRouter } from 'react-router';
 import cookie from 'react-cookie';
+import { withRouter } from 'react-router';
 import {
   BrowserRouter as Router,
   Route,
@@ -23,22 +23,21 @@ import Nav from './Nav.jsx';
 import '../styles/app.css';
 import CartList from './CartList.jsx';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: '',
+      loggedIn: false,
+      activeItem: 'Home',
       recipeList: recipeObj.fakeRecipes,
-      favoriteList: [],
       focalRecipe: sampleRecipe,
       recipeSearch: '',
       basketItems: [],
       cartItems: [],
+      favoriteList: [],
       favoriteError: false,
       favoriteSuccess: false,
-      loggedIn: false,
-      activeItem: 'Home',
       basketLoading: false,
       recipeLoading: false,
       searchLoading: false
@@ -63,6 +62,18 @@ class App extends React.Component {
       this.setState({
         loggedIn: true,
         currentUser: currentUser
+      });
+      $.ajax({
+        type: 'GET',
+        url: '/favorites',
+        success: (data) => {
+          this.setState({
+            favoriteList: data[0].favorites,
+          });
+        },
+        error: (err) => {
+          console.log(err);
+        }
       });
     }
   }
@@ -243,7 +254,6 @@ class App extends React.Component {
       url: '/unfavorite',
       data: recipe,
       success: (res) => {
-        console.log(res);
         $.ajax({
           type: 'GET',
           url: '/favorites',

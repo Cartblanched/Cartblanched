@@ -39,7 +39,7 @@ class FavoritesList extends React.Component {
                   <div className="description">{recipe.title}</div>
                 </div>
                 <div
-                  class="ui bottom attached button"
+                  className="ui bottom attached button"
                   onClick={() => {this.handleUnFavoriteClick(recipe)}}
                 >
                   Remove

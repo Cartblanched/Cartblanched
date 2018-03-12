@@ -67,11 +67,8 @@ app.get('/logout', (req, res) => {
   });
 });
 
-let closureUser = '';
-
 app.post('/favorites', (req, res) => {
   let username = req.body.username;
-  closureUser = username;
   let recipe = {
     id: req.body.id,
     title: req.body.title,
@@ -85,7 +82,7 @@ app.post('/favorites', (req, res) => {
 });
 
 app.get('/favorites', (req, res) => {
-  let username = closureUser;
+  let username = req.cookies.username;
   db.retrieveFavorites(username)
     .then(data => res.send(data));
 });
