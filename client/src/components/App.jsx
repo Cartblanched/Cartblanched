@@ -454,31 +454,57 @@ let sampleRecipe = {
     "spoonacularSourceUrl": "https://spoonacular.com/four-ingredient-slow-cooker-pot-roast-197109",
     "extendedIngredients": [
         {
-            "originalString": "1 (12-oz.) can beer",
+            "id": 14006,
+            "aisle": "Alcoholic Beverages",
+            "image": "https://spoonacular.com/cdn/ingredients_100x100/beer.jpg",
+            "consistency": "liquid",
             "name": "beer",
             "amount": 12,
             "unit": "oz",
+            "originalString": "1 (12-oz.) can beer",
+            "metaInformation": [
+                "canned"
+            ],
             checked: false
         },
         {
-            "originalString": "1 tablespoon canola oil",
+            "id": 4582,
+            "aisle": "Oil, Vinegar, Salad Dressing",
+            "image": "https://spoonacular.com/cdn/ingredients_100x100/vegetable-oil.jpg",
+            "consistency": "liquid",
             "name": "canola oil",
             "amount": 1,
             "unit": "tablespoon",
+            "originalString": "1 tablespoon canola oil",
+            "metaInformation": [],
             checked: false
         },
         {
-            "originalString": "1 (3- to 4-lb.) chuck roast, trimmed",
+            "id": 13786,
+            "aisle": "Meat",
+            "image": "https://spoonacular.com/cdn/ingredients_100x100/beef-chuck-roast.png",
+            "consistency": "solid",
             "name": "chuck roast",
             "amount": 3,
             "unit": "lb",
+            "originalString": "1 (3- to 4-lb.) chuck roast, trimmed",
+            "metaInformation": [
+                "trimmed"
+            ],
             checked: false
         },
         {
-            "originalString": "1 (0.7-oz.) envelope Italian dressing mix",
+            "id": 93733,
+            "aisle": "Oil, Vinegar, Salad Dressing",
+            "image": "https://spoonacular.com/cdn/ingredients_100x100/oregano-dried.png",
+            "consistency": "solid",
             "name": "ranch dressing mix",
             "amount": 0.7,
             "unit": "oz",
+            "originalString": "1 (0.7-oz.) envelope Italian dressing mix",
+            "metaInformation": [
+                "italian"
+            ],
             checked: false
         }
     ],

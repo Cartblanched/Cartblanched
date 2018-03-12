@@ -13,11 +13,7 @@ var AllRecipesList = (props) => {
   } else {
     return (
       <div className="ui segment">
-        <Dimmer active={props.searchLoading} inverted>
-          <Loader />
-        </Dimmer>
         <h3 className="allrecipes">Displaying Recipes</h3>
-
         <div className="ui five link cards">
           {props.recipeList.map((recipe) =>
             <div className="card" onClick = {() => props.onRecipeClick(recipe)}>
@@ -43,6 +39,9 @@ var AllRecipesList = (props) => {
           )}
 
         </div>
+        <Dimmer active={props.searchLoading} inverted>
+          <Loader />
+        </Dimmer>
       </div>
     );
   }

@@ -36,17 +36,17 @@ const AISLE_TO_WALMART_CATEGORY = {
 }
 
 const getProducts = (terms, aisles, cb) => {
-  var promises = [];
-  for (var i = 0; i < terms.length; i++ ) {
-    if (AISLE_TO_WALMART_CATEGORY[aisles[i]]) {
-      var categoryId = AISLE_TO_WALMART_CATEGORY[aisles[i]];
+
+  Promise.map(terms, function(term, idx) {
+    if (AISLE_TO_WALMART_CATEGORY[aisles[idx]]) {
+      var categoryId = AISLE_TO_WALMART_CATEGORY[aisles[idx]];
     } else {
       var categoryId = 976759;
     }
-    promises.push(searchOneTerm(terms[i], categoryId));
-  }
-  Promise.all(promises)
+    return delayPromise(searchOneTerm(term, categoryId), 500);
+  }, {concurrency: 2})
     .then((data) => {
+      console.log(data);
       let parsedData = [];
       for (var i = 0; i < data.length; i++) {
         let itemString = data[i].data.query.replace(/'/g, "");
@@ -65,11 +65,16 @@ const getProducts = (terms, aisles, cb) => {
       }
       cb(parsedData);
     })
-  .catch((err) => {
-    console.log(err);
-  });
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
+const delayPromise = (promise, delay) => {
+  return Promise.delay(delay).then(() => {
+    return promise;
+  });
+}
 
 const searchOneTerm = (term, categoryId) => {
   return axios.get(`http://api.walmartlabs.com/v1/search?apiKey=${process.env.WALMART_KEY}&categoryId=${categoryId}&numItems=20&query='${term}'&sort=relevance`)
