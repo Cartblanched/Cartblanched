@@ -11,11 +11,11 @@
 ## Getting Started
 
 1. Register for the following API keys to enable full access to features:
-  - [Spoonacular API key](https://rapidapi.com/user/spoonacular/package/Recipe%20-%20Food%20-%20Nutrition/pricing)
-  - [Twilio account](https://www.twilio.com/docs/api/rest/account)
-  - [Twilio API key](https://www.twilio.com/docs/api/rest/keys)
-  - [Walmart account](https://developer.walmartlabs.com/member)
-  - [Walmart API key](https://developer.walmartlabs.com/apps/mykeys)
+    * [Spoonacular API key](https://rapidapi.com/user/spoonacular/package/Recipe%20-%20Food%20-%20Nutrition/pricing)
+    * [Twilio account](https://www.twilio.com/docs/api/rest/account)
+    * [Twilio API key](https://www.twilio.com/docs/api/rest/keys)
+    * [Walmart account](https://developer.walmartlabs.com/member)
+    * [Walmart API key](https://developer.walmartlabs.com/apps/mykeys)
   
 2. In your root directory, create a .env file with the following:
 ```
@@ -26,11 +26,11 @@ MONGO=mongodb://localhost/cartblanched
 WALMART_KEY=(insert key here)
 ```
 3. Run the following start scripts in your root dir:
-  - npm install
-  - npm run react-dev
-  - npm run server-dev
-  - sudo mongod
-  - optional: run an instance of mongo
+    * npm install
+    * npm run react-dev
+    * npm run server-dev
+    * sudo mongod
+    * optional: run an instance of mongo
   
 4. Navigate to localhost:3000 in your browser
 
@@ -86,5 +86,4 @@ Dev Dependencies
   "webpack": "^3.11.0",
   "webpack-cli": "^2.0.10",
   "webpack-dev-server": "^3.1.0"
-  
 ```
