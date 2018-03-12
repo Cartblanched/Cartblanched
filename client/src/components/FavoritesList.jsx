@@ -1,4 +1,5 @@
 import React from 'react';
+import DragDrop from './DragDrop.jsx';
 
 class FavoritesList extends React.Component {
   constructor(props) {
@@ -63,33 +64,39 @@ class FavoritesList extends React.Component {
       )
     } else {
       return (
-        <div className="ui segment topmargin">
-          <h3>{this.props.currentUser}'s Favorite Recipes </h3>
+        <div>
+          <div className="ui segment topmargin">
+            <h3>{this.props.currentUser}'s Favorite Recipes </h3>
 
-          <div className="ui five link cards">
-            {this.state.favoriteList.map((recipe, index) =>
-              <div
-                key={index}
-                className="card"
-              >
+            <div className="ui five link cards">
+              {this.state.favoriteList.map((recipe, index) =>
                 <div
-                  className="image"
-                  onClick = {() => this.props.onRecipeClick(recipe)}
+                  key={index}
+                  className="card"
                 >
-                  <img src={recipe.image}/>
+                  <div
+                    className="image"
+                    onClick = {() => this.props.onRecipeClick(recipe)}
+                  >
+                    <img src={recipe.image}/>
+                  </div>
+                  <div className="content">
+                    <div className="description">{recipe.title}</div>
+                  </div>
+                  <div
+                    className="ui bottom attached button"
+                    onClick={() => {this.handleUnFavoriteClick(recipe)}}
+                  >
+                    Remove
+                  </div>
                 </div>
-                <div className="content">
-                  <div className="description">{recipe.title}</div>
-                </div>
-                <div
-                  className="ui bottom attached button"
-                  onClick={() => {this.handleUnFavoriteClick(recipe)}}
-                >
-                  Remove
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
+          <DragDrop favoriteList={this.state.favoriteList.map((recipe, index) => {
+            return <img className="dragdrop" src={recipe.image} />
+          })}
+          />
         </div>
       );
     }
