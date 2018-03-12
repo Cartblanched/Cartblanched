@@ -59,6 +59,10 @@
   margin-bottom: 20px;
 }
 
+.recipeButton {
+  margin-top: 25% !important;
+}
+
 .dragdrop {
   width: 119px;
   height: 119px;
@@ -74,6 +78,5 @@
 .day {
   width: 80px !important;
 }
-
 
 

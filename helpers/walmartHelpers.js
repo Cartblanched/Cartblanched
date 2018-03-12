@@ -44,7 +44,7 @@ const getProducts = (terms, aisles, cb) => {
       var categoryId = 976759;
     }
     return delayPromise(searchOneTerm(term, categoryId), 500);
-  }, {concurrency: 2})
+  }, {concurrency: 4})
     .then((data) => {
       console.log(data);
       let parsedData = [];
