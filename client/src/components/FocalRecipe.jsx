@@ -4,7 +4,7 @@ import $ from 'jquery';
 import ErrorMessage from './Error.jsx';
 import SuccessMessage from './Success.jsx';
 import Ingredient from './Ingredient.jsx';
-import { Button, Dimmer, Loader } from 'semantic-ui-react';
+import { Button, Dimmer, Loader, Popup } from 'semantic-ui-react';
 import '../styles/app.css';
 
 class FocalRecipe extends React.Component {
@@ -14,15 +14,53 @@ class FocalRecipe extends React.Component {
       areaCode: '',
       prefix: '',
       lineNum: '',
-      phoneError: false,
       phoneSuccess: false,
+      favePopup: false,
+      textPopup: false,
+      textIngredients: false
     };
     this.sendNumber = this.sendNumber.bind(this);
     this.onAreaCodeEntry = this.onAreaCodeEntry.bind(this);
     this.onPrefixEntry = this.onPrefixEntry.bind(this);
     this.onLineNumEntry = this.onLineNumEntry.bind(this);
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
+    this.handleFaveOpen = this.handleFaveOpen.bind(this);
+    this.handleFaveClose = this.handleFaveClose.bind(this);
+    this.handleTextOpen = this.handleTextOpen.bind(this);
+    this.handleTextClose = this.handleTextClose.bind(this);
   }
+
+
+  handleFaveOpen() {
+    this.setState({ favePopup: true});
+
+    this.timeout = setTimeout(() => {
+      this.setState({ favePopup: false });
+    }, 2000);
+  }
+
+  handleFaveClose() {
+    this.setState({ favePopup: false });
+    clearTimeout(this.timeout);
+  }
+
+  handleTextOpen() {
+    // Hacky solution to make sure we display the right "popup" message
+    setTimeout(() => {
+      this.setState({ textPopup: true });
+    }, 100);
+
+    this.timeout = setTimeout(() => {
+      this.setState({ textPopup: false });
+    }, 2000);
+  }
+
+  handleTextClose() {
+    this.setState({ textPopup: false });
+    clearTimeout(this.timeout);
+  }
+
+
 
   onAreaCodeEntry(e) {
     this.setState({
@@ -44,24 +82,30 @@ class FocalRecipe extends React.Component {
 
   //send text message to user-inputted phone number, containing ingredients from recipe data loaded into the focal recipe component
   sendNumber() {
-    console.log('Should be texting the following ingredients: ');
+    let textIngredients = [];
     this.props.focalRecipe.extendedIngredients.forEach((ingredient) => {
       if (ingredient.checked) {
-        console.log(ingredient);
+        textIngredients.push(ingredient);
       }
-    })
+    });
+    if (textIngredients.length === 0) {
+      this.setState({
+        textIngredients: false
+      });
+      return;
+    } else {
+      this.setState({
+        textIngredients: true
+      });
+    }
     var phoneNumber = '1' + this.state.areaCode + this.state.prefix + this.state.lineNum;
     if (phoneNumber.length !== 11) {
       this.setState({
-        phoneError: true,
         phoneSuccess: false
       });
     } else {
-      this.setState({
-        phoneError: false
-      });
       // Overly complex algorithm for creating ingredients string to send through text
-      var ingredientsMessage = 'Could you please make me ' + this.props.focalRecipe.title + '? ' + 'The ingredients needed are: ' + this.props.focalRecipe.extendedIngredients.reduce((ingredients, ingredient) => ingredients + ingredient.amount + ' ' + ingredient.unit + ' ' + ingredient.name + ', ', '');
+      var ingredientsMessage = 'Could you please make me ' + this.props.focalRecipe.title + '? ' + 'The ingredients needed are: ' + textIngredients.reduce((ingredients, ingredient) => ingredients + ingredient.amount + ' ' + ingredient.unit + ' ' + ingredient.name + ', ', '');
       ingredientsMessage = ingredientsMessage.slice(0, -2);
       var component = this;
       $.ajax({
@@ -90,6 +134,13 @@ class FocalRecipe extends React.Component {
   }
 
   render() {
+    let faveContent = this.props.loggedIn ? "Added to favorites!" : "Create an account to access this feature :)";
+    let textContent = "";
+    if (!this.state.textIngredients) {
+      textContent = "Select some ingredients to get texted!";
+    } else {
+      textContent = this.state.phoneSuccess ? "Text Sent!" : "Invalid Phone Number";
+    }
     return (
       <div>
       <div className="ui two column stackable grid">
@@ -168,44 +219,40 @@ class FocalRecipe extends React.Component {
           </div>
         </form>
       </div>
-        {
-          this.state.phoneError ?
-            <ErrorMessage
-              message = {"Invalid Phone Number"}
-            /> : null
-        }
-        {
-          this.state.phoneSuccess ?
-            <SuccessMessage
-              message = {"Text Sent!"}
-            /> : null
-        }
-        {
-          this.props.favoriteError ?
-            <ErrorMessage
-              message = {"Create an account to access this feature :)"}
-            /> : null
-        }
-        {
-          this.props.favoriteSuccess ?
-            <SuccessMessage
-              message = {"Added to Favorites!"}
-            /> : null
-        }
         <div className="three ui buttons">
-          <button
-            className="ui button textButton"
-            onClick={this.sendNumber}
-          >
-              Send Text
-          </button>
-          <button
-            className="favoriteButton ui button"
-            onClick={this.handleFavoriteClick}
-          >
-            <i className="heart icon"></i>
-            Favorite
-          </button>
+          <Popup
+            trigger={
+              <button
+                className="ui button textButton"
+                onClick={this.sendNumber}
+              >
+                Send Text
+              </button>
+            }
+            content={textContent}
+            on='click'
+            open={this.state.textPopup}
+            onClose={this.handleTextClose}
+            onOpen={this.handleTextOpen}
+            position='top right'
+          />
+          <Popup
+            trigger={
+              <button
+                className="favoriteButton ui button"
+                onClick={this.handleFavoriteClick}
+              >
+              <i className="heart icon"></i>
+              Favorite
+              </button>
+            }
+            content={faveContent}
+            on='click'
+            open={this.state.favePopup}
+            onClose={this.handleFaveClose}
+            onOpen={this.handleFaveOpen}
+            position='top right'
+          />
           <Button
             className="ui button right floated basketButton"
             onClick={this.props.handleBasket}
