@@ -11,43 +11,10 @@ const userSchema = mongoose.Schema({
   username: {type: String, unique: true},
   password: String,
   email: String,
-  favorites: [Schema.Types.Mixed],
-  friends: [String]
+  favorites: [Schema.Types.Mixed]
 });
 
 let User = mongoose.model('User', userSchema);
-
-let userFavoriteSchema = mongoose.Schema({
-  username: String,
-  id: Number,
-  title: String,
-  image: String,
-  dateCreated: {
-    type: Date,
-    default: Date.now
-  },
-  likes: Number
-});
-
-let UserFavorite = mongoose.model('UserFavorite', userFavoriteSchema);
-
-//Returning list of a user's favorites, sorted descending by popularity('likes')
-let retrieve = (username) => {
-  return new Promise(function(resolve, reject) {
-    var query = UserFavorite.find({ 'username' : username });
-    query.select({});
-    query.limit(10);
-    query.sort({ likes: -1 });
-    query.exec(function(err, favorites) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(favorites);
-      }
-    });
-  });
-};
-
 
 let saveUser = (userData) => {
   return new Promise((resolve, reject) => {
@@ -70,42 +37,32 @@ let saveUser = (userData) => {
   });
 };
 
-let saveRecipe = (documentObj) => {
-  var duplicate = false;
-  return retrieve(documentObj.username).then(data => {
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].title === documentObj.title) {
-        duplicate = true;
-        break;
+let saveRecipe = (username, recipe) => {
+  return User.findOneAndUpdate(
+    { 'username': username },
+    { $addToSet: {'favorites': recipe} },
+    { new: true }
+  );
+};
+
+let retrieveFavorites = (username) => {
+  return new Promise((resolve, reject) => {
+    User.find({ 'username': username })
+    .select('favorites')
+    .sort({ likes: -1 })
+    .exec((err, favorites) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(favorites);
       }
-    }
-  }).then(data => {
-    if (!duplicate) {
-      return new Promise(function(resolve, reject) {
-        let document = new UserFavorite({
-          username: documentObj.username,
-          id: documentObj.id,
-          title: documentObj.title,
-          image: documentObj.image,
-          likes: documentObj.likes,
-          extendedIngredients: documentObj.extendedIngredients
-        });
-        document.save(function(err, favorite) {
-          if (err) reject(err);
-          resolve(favorite);
-        });
-      });
-    } else {
-      return new Promise(function(resolve, reject) {
-        resolve("Duplicate entry");
-      });
-    }
+    });
   });
 };
 
 module.exports = {
-  saveRecipe: saveRecipe,
   saveUser: saveUser,
-  retrieve: retrieve,
+  saveRecipe: saveRecipe,
+  retrieveFavorites: retrieveFavorites,
   User: User
 };
