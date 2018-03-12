@@ -1,6 +1,8 @@
 # Cartblanched
 
-> Order groceries to your home based on the ingredient lists of your favorite recipes. Cartblanched will automatically populate an online shopping cart with the ingredients you need. Don't want to order online? Get your ingredient lists sent to you via or friends and family while at the grocery store.
+> Order groceries based on the ingredient lists of your favorite recipes. Cartblanched will automatically populate an online shopping cart with the ingredients you need. Don't want to order online? Get your ingredient lists texted to your phone.
+
+
 
 ## Developer Team
 
