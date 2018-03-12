@@ -91,17 +91,27 @@ class FocalRecipe extends React.Component {
   render() {
     return (
       <div>
-
       <div className="ui two column stackable grid">
         <Dimmer active={this.props.recipeLoading} inverted>
           <Loader />
         </Dimmer>
         <div className="10 wide column">
           <h3>{this.props.focalRecipe.title}</h3>
-          <div>
-            <a href={this.props.focalRecipe.sourceUrl} target="_blank">
-              <img className="ui centered rounded image" src={this.props.focalRecipe.image}/>
-            </a>
+          <div className="ui focalimage">
+              <div className="dimmable image">
+                <div className="ui dimmer">
+                  <div className="content">
+                    <div className="center">
+                      <a href={this.props.focalRecipe.sourceUrl} target="_blank">
+                        <div className="ui button">View Full Recipe</div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <img
+                  className="ui centered rounded image" src={this.props.focalRecipe.image}
+                />
+              </div>
           </div>
         </div>
         <div className="6 wide column">
