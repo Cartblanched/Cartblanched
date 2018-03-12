@@ -15,7 +15,7 @@ class FocalRecipe extends React.Component {
       prefix: '',
       lineNum: '',
       phoneError: false,
-      phoneSuccess: false
+      phoneSuccess: false,
     };
     this.sendNumber = this.sendNumber.bind(this);
     this.onAreaCodeEntry = this.onAreaCodeEntry.bind(this);
@@ -83,6 +83,11 @@ class FocalRecipe extends React.Component {
     }
   }
 
+  handleFavoriteClick() {
+    let recipe = this.props.focalRecipe;
+    this.props.addFavorite(recipe);
+  }
+
   render() {
     return (
       <div>
@@ -95,9 +100,7 @@ class FocalRecipe extends React.Component {
           <h3>{this.props.focalRecipe.title}</h3>
           <div>
             <a href={this.props.focalRecipe.sourceUrl} target="_blank">
-              <img
-                className="ui centered rounded image" src={this.props.focalRecipe.image}
-              />
+              <img className="ui centered rounded image" src={this.props.focalRecipe.image}/>
             </a>
           </div>
         </div>
@@ -150,7 +153,7 @@ class FocalRecipe extends React.Component {
         {
           this.props.favoriteError ?
             <ErrorMessage
-              message = {"Enter a username before adding a favorite"}
+              message = {"Create an account to access this feature :)"}
             /> : null
         }
         {
@@ -168,7 +171,7 @@ class FocalRecipe extends React.Component {
           </button>
           <button
             className="favoriteButton ui button"
-            onClick={this.props.addFavorite}
+            onClick={this.handleFavoriteClick}
           >
             <i className="heart icon"></i>
             Favorite

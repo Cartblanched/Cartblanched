@@ -30,9 +30,8 @@ class App extends React.Component {
     this.state = {
       currentUser: '',
       recipeList: recipeObj.fakeRecipes,
-      favoriteList: favoriteRecipes.fakeRecipes,
+      favoriteList: [],
       focalRecipe: sampleRecipe,
-      userSearch: '',
       recipeSearch: '',
       basketItems: [],
       cartItems: [],
@@ -198,11 +197,11 @@ class App extends React.Component {
 
   addFavorite(recipe) {
     var component = this;
-    if (component.state.userSearch === '') {
+    recipe.username = component.state.currentUser;
+    if (!this.state.loggedIn) {
       component.setState({
         favoriteError: true
       });
-      console.log(this.state.favoriteError, 'error');
     } else {
       component.setState({
         favoriteError: false,
@@ -210,14 +209,7 @@ class App extends React.Component {
       $.ajax({
         method: 'POST',
         url: '/favorites',
-        data: {
-          username: component.state.userSearch,
-          id: component.state.focalRecipe.id,
-          title: component.state.focalRecipe.title,
-          image: component.state.focalRecipe.image,
-          likes: component.state.focalRecipe.likes,
-          extendedIngredients: component.state.focalRecipe.extendedIngredients
-        },
+        data: recipe,
         success: (res) => {
           component.setState({
             favoriteSuccess: true
@@ -225,8 +217,8 @@ class App extends React.Component {
           $.ajax({
             type: 'GET',
             url: '/favorites',
-            data: 'username=' + component.state.userSearch,
             success: (favRecipesData) => {
+              console.log(favRecipesData);
               component.setState({
                 favoriteList: favRecipesData,
               });
@@ -407,28 +399,8 @@ class App extends React.Component {
   }
 }
 
-var favoriteRecipes = {fakeRecipes: [
-    {
-        "id": 933310,
-        "title": "2 Ingredient Instant Pot Applesauce",
-        "image": "https://spoonacular.com/recipeImages/933310-312x231.jpg",
-        "imageType": "jpg",
-        "usedIngredientCount": 1,
-        "missedIngredientCount": 0,
-        "likes": 0
-    },
-    {
-        "id": 936707,
-        "title": "Dried Apples",
-        "image": "https://spoonacular.com/recipeImages/936707-312x231.jpg",
-        "imageType": "jpg",
-        "usedIngredientCount": 1,
-        "missedIngredientCount": 1,
-        "likes": 265
-    },
-]}
-
-var recipeObj = {fakeRecipes: [
+let recipeObj = {
+  fakeRecipes: [
     {
         "id": 933310,
         "title": "2 Ingredient Instant Pot Applesauce",
@@ -476,8 +448,8 @@ var recipeObj = {fakeRecipes: [
     }
 ]}
 
-var sampleRecipe =
-{   "id": 197109,
+let sampleRecipe = {
+    "id": 197109,
     "sourceUrl": "http://www.myrecipes.com/recipe/slow-cooker-pot-roast-50400000131366/",
     "spoonacularSourceUrl": "https://spoonacular.com/four-ingredient-slow-cooker-pot-roast-197109",
     "extendedIngredients": [

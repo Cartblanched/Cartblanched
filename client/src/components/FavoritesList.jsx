@@ -6,7 +6,7 @@ var FavoritesList = (props) => {
     return (
       <div className="ui segment topmargin">
         <h3>{props.currentUser}'s Favorite Recipes </h3>
-        <div>No favorites yet.</div>
+        <div>0 Favorites</div>
       </div>
     )
   } else {

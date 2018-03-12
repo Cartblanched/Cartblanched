@@ -5,8 +5,6 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 
-const recipe = require('../database-mongo/RecipeIDData.js');
-const recipeList = require('../database-mongo/RecipeListData.js');
 const twilioHelpers = require('../helpers/twilioHelpers.js');
 const spoonacularHelpers = require('../helpers/spoonacularHelpers.js');
 const auth = require('../helpers/authHelpers.js');
@@ -70,14 +68,22 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/favorites', (req, res) => {
-  var documentObj = req.body;
-  db.saveRecipe(documentObj)
-    .then(response => res.send('saved to db'));
+  console.log(req.body);
+  let username = req.body.username;
+  let recipe = {
+    title: req.body.title,
+    url: req.body.url,
+    image: req.body.image,
+    likes: req.body.likes,
+    extendedIngredients: req.body.extendedIngredients
+  };
+  db.saveRecipe(username, recipe)
+    .then(response => res.send('Saved new recipe to favorites'));
 });
 
 app.get('/favorites', (req, res) => {
-  var username = req.query.username;
-  db.retrieve(username)
+  var username = req.session.user;
+  db.retrieveFavorites(username)
     .then(data => res.send(data));
 });
 
