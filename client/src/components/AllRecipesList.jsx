@@ -15,15 +15,19 @@ var AllRecipesList = (props) => {
       <div className="ui segment">
         <h3 className="allrecipes">Displaying Recipes</h3>
         <div className="ui five link cards">
-          {props.recipeList.map((recipe) =>
-            <div className="card" onClick = {() => props.onRecipeClick(recipe)}>
+          {props.recipeList.map((recipe, index) =>
+            <div
+              key={index}
+              className="card"
+              onClick = {() => props.onRecipeClick(recipe)}
+            >
 
               <div className="image">
                 <img src={recipe.image}/>
               </div>
 
               <div className="content">
-                <div className="header">{recipe.title}</div>
+                <div className="description">{recipe.title}</div>
               </div>
 
               <div className="extra content">

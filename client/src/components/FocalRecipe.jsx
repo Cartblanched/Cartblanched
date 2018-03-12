@@ -121,8 +121,12 @@ class FocalRecipe extends React.Component {
           </div>
 
           <div className="extra content">
-            {this.props.focalRecipe.extendedIngredients.map((ingredient) =>
-              <Ingredient handleCheck={this.props.handleCheck} ingredient={ingredient} />
+            {this.props.focalRecipe.extendedIngredients.map((ingredient, index) =>
+              <Ingredient
+                key={index}
+                handleCheck={this.props.handleCheck}
+                ingredient={ingredient}
+              />
             )}
           </div>
         </div>
@@ -133,17 +137,32 @@ class FocalRecipe extends React.Component {
           <div className="inline fields">
               <div className="five wide field">
                 <div className="ui mini input inputStyle">
-                  <input value={this.state.areaCode} onChange={this.onAreaCodeEntry} type="text" placeholder="xxx" />
+                  <input
+                    value={this.state.areaCode}
+                    onChange={this.onAreaCodeEntry}
+                    type="text"
+                    placeholder="xxx"
+                  />
                 </div>
               </div>
               <div className="five wide field">
                 <div className="ui mini input inputStyle">
-                  <input value={this.state.prefix} onChange={this.onPrefixEntry} type="text" placeholder="xxx" />
+                  <input
+                    value={this.state.prefix}
+                    onChange={this.onPrefixEntry}
+                    type="text"
+                    placeholder="xxx"
+                  />
                 </div>
               </div>
               <div className="six wide field">
                 <div className="ui mini input inputStyle">
-                  <input value={this.state.lineNum} onChange={this.onLineNumEntry} type="text" placeholder="xxxx" />
+                  <input
+                    value={this.state.lineNum}
+                    onChange={this.onLineNumEntry}
+                    type="text"
+                    placeholder="xxxx"
+                  />
                 </div>
               </div>
           </div>
