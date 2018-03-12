@@ -3,6 +3,7 @@ const axios = require('axios');
 const $ = require('jquery');
 const request = require('request');
 require('dotenv').config();
+
 const runTests = function () {
   testSpoonacularGet();
   // testSignupBlankForm();
@@ -78,6 +79,7 @@ const testSpoonacularGet = function () {
 //       }
 //     });
 //   }
+
 // ATTEMPT 3 TO TEST /signup
 // const testSignupBlankForm = function () {
 //   request.post('http://127.0.0.1:3000/signup', {form:{username: '', email: '', password: ''}})
@@ -89,5 +91,4 @@ const testSpoonacularGet = function () {
 // }
 
 runTests();
-
 // req.body = { email: '1', username: '2', password: '3' }
