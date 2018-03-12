@@ -36,8 +36,8 @@ class App extends React.Component {
       basketItems: [],
       cartItems: [],
       favoriteList: [],
-      favoriteError: false,
-      favoriteSuccess: false,
+      loggedIn: false,
+      activeItem: 'Home',
       basketLoading: false,
       recipeLoading: false,
       searchLoading: false
@@ -211,13 +211,8 @@ class App extends React.Component {
     var component = this;
     recipe.username = component.state.currentUser;
     if (!this.state.loggedIn) {
-      component.setState({
-        favoriteError: true
-      });
+      return;
     } else {
-      component.setState({
-        favoriteError: false,
-      });
       $.ajax({
         method: 'POST',
         url: '/favorites',
@@ -402,12 +397,11 @@ class App extends React.Component {
                           focalRecipe={this.state.focalRecipe}
                           recipeList={this.state.recipeList}
                           addFavorite={this.addFavorite}
-                          favoriteError={this.state.favoriteError}
-                          favoriteSuccess={this.state.favoriteSuccess}
                           handleCheck={this.onIngredientCheck}
                           handleBasket={this.createBasket}
                           basketLoading={this.state.basketLoading}
                           recipeLoading={this.state.recipeLoading}
+                          loggedIn={this.state.loggedIn}
                         />
                       </div>
                     </div>
