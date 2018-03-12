@@ -21,6 +21,7 @@ class FocalRecipe extends React.Component {
     this.onAreaCodeEntry = this.onAreaCodeEntry.bind(this);
     this.onPrefixEntry = this.onPrefixEntry.bind(this);
     this.onLineNumEntry = this.onLineNumEntry.bind(this);
+    this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
   }
 
   onAreaCodeEntry(e) {

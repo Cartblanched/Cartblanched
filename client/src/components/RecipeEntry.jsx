@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 var RecipeEntry = (props) => {
   if (props.recipe !== undefined) {
   return (

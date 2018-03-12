@@ -49,6 +49,7 @@ class App extends React.Component {
     this.loginSubmit = this.loginSubmit.bind(this);
     this.onRecipeClick = this.onRecipeClick.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
+    this.unFavorite = this.unFavorite.bind(this);
     this.onRecipeSearch = this.onRecipeSearch.bind(this);
     this.onRecipeSearchClick = this.onRecipeSearchClick.bind(this);
     this.onIngredientCheck = this.onIngredientCheck.bind(this);
@@ -217,10 +218,9 @@ class App extends React.Component {
           $.ajax({
             type: 'GET',
             url: '/favorites',
-            success: (favRecipesData) => {
-              console.log(favRecipesData);
+            success: (data) => {
               component.setState({
-                favoriteList: favRecipesData,
+                favoriteList: data[0].favorites,
               });
             },
             error: (err) => {
@@ -233,6 +233,35 @@ class App extends React.Component {
         }
       });
     }
+  }
+
+  unFavorite(recipe) {
+    var component = this;
+    recipe.username = component.state.currentUser;
+    $.ajax({
+      method: 'POST',
+      url: '/unfavorite',
+      data: recipe,
+      success: (res) => {
+        console.log(res);
+        $.ajax({
+          type: 'GET',
+          url: '/favorites',
+          success: (data) => {
+            console.log(data);
+            component.setState({
+              favoriteList: data[0].favorites,
+            });
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
   createBasket() {
@@ -325,6 +354,7 @@ class App extends React.Component {
               <FavoritesList
                 favoriteList={this.state.favoriteList}
                 onRecipeClick={this.onRecipeClick}
+                unFavorite={this.unFavorite}
                 currentUser={this.state.currentUser}
               />
             }

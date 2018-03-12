@@ -14,9 +14,9 @@ const userSchema = mongoose.Schema({
   favorites: [Schema.Types.Mixed]
 });
 
-let User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
-let saveUser = (userData) => {
+const saveUser = (userData) => {
   return new Promise((resolve, reject) => {
     User.find({'username': userData.username})
       .exec((err, result) => {
@@ -37,7 +37,7 @@ let saveUser = (userData) => {
   });
 };
 
-let saveRecipe = (username, recipe) => {
+const saveRecipe = (username, recipe) => {
   return User.findOneAndUpdate(
     { 'username': username },
     { $addToSet: {'favorites': recipe} },
@@ -45,7 +45,14 @@ let saveRecipe = (username, recipe) => {
   );
 };
 
-let retrieveFavorites = (username) => {
+const deleteRecipe = (username, recipe) => {
+  return User.update(
+    { 'username': username },
+    { $pull: {'favorites': {id: recipe.id} }}
+  );
+}
+
+const retrieveFavorites = (username) => {
   return new Promise((resolve, reject) => {
     User.find({ 'username': username })
     .select('favorites')
@@ -61,8 +68,9 @@ let retrieveFavorites = (username) => {
 };
 
 module.exports = {
+  User: User,
   saveUser: saveUser,
   saveRecipe: saveRecipe,
+  deleteRecipe: deleteRecipe,
   retrieveFavorites: retrieveFavorites,
-  User: User
 };
