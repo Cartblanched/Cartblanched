@@ -35,7 +35,6 @@ class App extends React.Component {
       recipeSearch: '',
       basketItems: [],
       cartItems: [],
-      favoriteList: [],
       loggedIn: false,
       activeItem: 'Home',
       basketLoading: false,
@@ -48,7 +47,6 @@ class App extends React.Component {
     this.loginSubmit = this.loginSubmit.bind(this);
     this.onRecipeClick = this.onRecipeClick.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
-    this.unFavorite = this.unFavorite.bind(this);
     this.onRecipeSearch = this.onRecipeSearch.bind(this);
     this.onRecipeSearchClick = this.onRecipeSearchClick.bind(this);
     this.onIngredientCheck = this.onIngredientCheck.bind(this);
@@ -62,18 +60,6 @@ class App extends React.Component {
       this.setState({
         loggedIn: true,
         currentUser: currentUser
-      });
-      $.ajax({
-        type: 'GET',
-        url: '/favorites',
-        success: (data) => {
-          this.setState({
-            favoriteList: data[0].favorites,
-          });
-        },
-        error: (err) => {
-          console.log(err);
-        }
       });
     }
   }
@@ -221,52 +207,12 @@ class App extends React.Component {
           component.setState({
             favoriteSuccess: true
           });
-          $.ajax({
-            type: 'GET',
-            url: '/favorites',
-            success: (data) => {
-              component.setState({
-                favoriteList: data[0].favorites,
-              });
-            },
-            error: (err) => {
-              console.log(err);
-            }
-          });
         },
         error: (err) => {
           console.log(err);
         }
       });
     }
-  }
-
-  unFavorite(recipe) {
-    var component = this;
-    recipe.username = component.state.currentUser;
-    $.ajax({
-      method: 'POST',
-      url: '/unfavorite',
-      data: recipe,
-      success: (res) => {
-        $.ajax({
-          type: 'GET',
-          url: '/favorites',
-          success: (data) => {
-            console.log(data);
-            component.setState({
-              favoriteList: data[0].favorites,
-            });
-          },
-          error: (err) => {
-            console.log(err);
-          }
-        });
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
   }
 
   createBasket() {
@@ -357,7 +303,7 @@ class App extends React.Component {
             exact path="/faves"
             render={ () =>
               <FavoritesList
-                favoriteList={this.state.favoriteList}
+
                 onRecipeClick={this.onRecipeClick}
                 unFavorite={this.unFavorite}
                 currentUser={this.state.currentUser}
@@ -380,7 +326,6 @@ class App extends React.Component {
             render={ () =>
               <CartList
                 items={this.state.cartItems}
-                handleCart={this.createCart}
               />
             }
           />

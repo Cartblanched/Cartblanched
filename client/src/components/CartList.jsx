@@ -36,6 +36,12 @@ class CartList extends React.Component {
       items.push(`${item.itemId}|${item.quantity}`);
     }
     items = items.join(',');
+    while(this.state.cartItems.length) {
+      this.state.cartItems.pop();
+    }
+    this.setState({
+      cartItems: this.state.cartItems
+    });
     window.open(
       `http://c.affil.walmart.com/t/affsdk?l=http://affil.walmart.com/cart/buynow?items=${items}&wmlspartner=&affsdktrack=trackingid&veh=aff&affs=sdk&affsdktype=html&affsdkcomp=buynowbutton&colorscheme=orange&sizescheme=compact`,
       "_blank"
