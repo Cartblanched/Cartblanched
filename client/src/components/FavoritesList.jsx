@@ -1,37 +1,55 @@
 import React from 'react';
-import RecipeEntry from './RecipeEntry.jsx';
 
-var FavoritesList = (props) => {
-  if (props.favoriteList.length === 0) {
-    return (
-      <div className="ui segment topmargin">
-        <h3>{props.currentUser}'s Favorite Recipes </h3>
-        <div>0 Favorites</div>
-      </div>
-    )
-  } else {
-    return (
-      <div className="ui segment topmargin">
-        <h3>{props.currentUser}'s Favorite Recipes </h3>
+class FavoritesList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleUnFavoriteClick = this.handleUnFavoriteClick.bind(this);
+  }
 
-        <div className="ui five link cards">
-          {props.favoriteList.map((recipe) =>
+  handleUnFavoriteClick(recipe) {
+    this.props.unFavorite(recipe);
+  }
 
-            <div className="card" onClick = {() => props.onRecipeClick(recipe)}>
-
-              <div className="image">
-                <img src={recipe.image}/>
-              </div>
-
-              <div className="content">
-                <div className="header">{recipe.title}</div>
-              </div>
-
-            </div>
-          )}
+  render() {
+   if (this.props.favoriteList.length === 0) {
+      return (
+        <div className="ui segment topmargin">
+          <h3>{this.props.currentUser}'s Favorite Recipes </h3>
+          <div>0 Favorites</div>
         </div>
-      </div>
-    );
+      )
+    } else {
+      return (
+        <div className="ui segment topmargin">
+          <h3>{this.props.currentUser}'s Favorite Recipes </h3>
+
+          <div className="ui five link cards">
+            {this.props.favoriteList.map((recipe, index) =>
+              <div
+                key={index}
+                className="card"
+              >
+                <div
+                  className="image"
+                  onClick = {() => this.props.onRecipeClick(recipe)}
+                >
+                  <img src={recipe.image}/>
+                </div>
+                <div className="content">
+                  <div className="description">{recipe.title}</div>
+                </div>
+                <div
+                  class="ui bottom attached button"
+                  onClick={() => {this.handleUnFavoriteClick(recipe)}}
+                >
+                  Remove
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
   }
 }
 

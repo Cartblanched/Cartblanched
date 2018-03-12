@@ -67,12 +67,15 @@ app.get('/logout', (req, res) => {
   });
 });
 
+let closureUser = '';
+
 app.post('/favorites', (req, res) => {
-  console.log(req.body);
   let username = req.body.username;
+  closureUser = username;
   let recipe = {
+    id: req.body.id,
     title: req.body.title,
-    url: req.body.url,
+    url: req.body.sourceUrl,
     image: req.body.image,
     likes: req.body.likes,
     extendedIngredients: req.body.extendedIngredients
@@ -82,9 +85,31 @@ app.post('/favorites', (req, res) => {
 });
 
 app.get('/favorites', (req, res) => {
-  var username = req.session.user;
+  let username = closureUser;
   db.retrieveFavorites(username)
     .then(data => res.send(data));
+});
+
+app.post('/unfavorite', (req, res) => {
+  let username = req.body.username;
+  let recipe = {
+    id: req.body.id,
+    title: req.body.title,
+    url: req.body.sourceUrl,
+    image: req.body.image,
+    likes: req.body.likes,
+    extendedIngredients: req.body.extendedIngredients
+  };
+  db.deleteRecipe(username, recipe)
+    .then(() => {
+      console.log(`Successfully deleted favorite for ${username}`);
+      res.status(200).send('Successfully deleted favorite from database');
+    })
+    .catch((err) => {
+      console.log('Failed to delete favorite from database');
+      console.log(err);
+      res.status(500).send('Failed to delete favorite from database');
+    });
 });
 
 app.get('/recipes', (req, res) => {
