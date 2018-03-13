@@ -360,9 +360,10 @@ class App extends React.Component {
                         recipeSearch={this.state.recipeSearch}
                       />
                     </div>
+                    {/* Disable for now
                     <div className="googleAd">
                       <GoogleAd />
-                    </div>
+                    </div>*/}
                   </div>
                 </div>
                 <AllRecipesList
