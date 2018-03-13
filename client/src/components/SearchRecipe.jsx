@@ -47,10 +47,11 @@ var SearchRecipe = (props) => {
   return (
     <div className="ui segment">
       <div className="seasonlist">
-        <h5 className="seasontoday">Eat the Seasons:  <span>{renderToday()}</span></h5>
+        <p className="eatseasons">Eat the Seasons</p>
+        <p>{renderToday()}</p>
         {renderSeason()}
       </div>
-
+      <div class="ui divider"></div>
       <form className="ui form">
         <div className="field">
           <div className="ui header small">Search Recipes</div>
