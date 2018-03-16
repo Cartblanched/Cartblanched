@@ -93,10 +93,10 @@ class FavoritesList extends React.Component {
               )}
             </div>
           </div>
-          <DragDrop favoriteList={this.state.favoriteList.map((recipe, index) => {
+          {/*<DragDrop favoriteList={this.state.favoriteList.map((recipe, index) => {
             return <img className="dragdrop" src={recipe.image} />
           })}
-          />
+          />*/}
         </div>
       );
     }
